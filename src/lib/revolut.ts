@@ -60,6 +60,11 @@ function getRevolutTrades(): RevolutTradeItem[] {
 
 function getRevolutInvestedUpTo(trades: RevolutTradeItem[], cutoffMs: number, totalCost: number): number {
   if (trades.length === 0) return totalCost;
+  const lastTradeTime = trades[trades.length - 1]?.timestamp || 0;
+  // Si la fecha de corte es posterior al último hito de compra del extracto, el capital invertido es el coste real actual
+  if (cutoffMs >= lastTradeTime) {
+    return totalCost;
+  }
   let invested = 0;
   for (const t of trades) {
     if (t.timestamp <= cutoffMs) {
@@ -172,15 +177,20 @@ export async function getRevolutChartPoints(
     ? Math.max(0.1, Math.min(1.0, primaryHolding.currentValue / totalValue))
     : 0.2;
 
-  // 1D: Ventana de trading activa en alta definición
+  // 1D: Ventana de trading activa en alta definición de la última sesión
   if (timeframe === "D") {
-    const tradingCandles = realCandles.filter((c) => {
+    const latestTs = realCandles[realCandles.length - 1]?.timestamp;
+    const latestDate = latestTs ? new Date(latestTs) : now;
+    const sessionCandles = realCandles.filter((c) => {
       const d = new Date(c.timestamp);
-      const day = d.getDay();
-      return day !== 0 && day !== 6;
+      return (
+        d.getDate() === latestDate.getDate() &&
+        d.getMonth() === latestDate.getMonth() &&
+        d.getFullYear() === latestDate.getFullYear()
+      );
     });
 
-    const candlesToUse = tradingCandles.length > 0 ? tradingCandles : realCandles;
+    const candlesToUse = sessionCandles.length > 0 ? sessionCandles : realCandles;
     const sampleCount = Math.min(32, Math.max(16, candlesToUse.length));
     const step = Math.max(1, Math.floor(candlesToUse.length / sampleCount));
     const sampledCandles: CandleItem[] = [];
@@ -289,16 +299,19 @@ export async function getRevolutChartPoints(
         tradeEvent = { type: "BUY", label: `Compra ${tickers}: +${formatEur(sumEur)}` };
       }
 
-      const profPct = investedAtDay > 0 ? Number(((prof / investedAtDay) * 100).toFixed(2)) : 0;
+      const finalVal = isLast ? totalValue : val;
+      const finalInv = isLast ? totalCost : investedAtDay;
+      const finalProf = isLast ? Number((totalValue - totalCost).toFixed(2)) : prof;
+      const finalProfPct = finalInv > 0 ? Number(((finalProf / finalInv) * 100).toFixed(2)) : 0;
 
       points.push({
         timestamp: ptDate.getTime(),
         date: dateLabel,
         fullDate,
-        realProfit: Number(prof.toFixed(2)),
-        realProfitPct: profPct,
-        totalValue: Number(val.toFixed(2)),
-        totalInvested: Number(investedAtDay.toFixed(2)),
+        realProfit: finalProf,
+        realProfitPct: finalProfPct,
+        totalValue: Number(finalVal.toFixed(2)),
+        totalInvested: Number(finalInv.toFixed(2)),
         tradeEvent,
       });
     }

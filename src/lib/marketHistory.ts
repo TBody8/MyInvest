@@ -51,7 +51,7 @@ export async function getRealMarketCandles(rawTicker: string, timeframe: Timefra
   switch (timeframe) {
     case "D":
       interval = "15m";
-      range = "5d";
+      range = "1d";
       break;
     case "W":
       interval = "1h";
@@ -178,15 +178,20 @@ export async function buildRealPortfolioHistory(
     ? Math.max(0.1, Math.min(1.0, primaryHolding.currentValue / currentTotalValue))
     : 0.5;
 
-  // 1. DÍA (1D): Sesión de mercado intradía
+  // 1. DÍA (1D): Sesión de mercado intradía de la última sesión activa (sin mezclar múltiples días)
   if (timeframe === "D") {
-    const tradingCandles = realCandles.filter((c) => {
+    const latestTs = realCandles[realCandles.length - 1]?.timestamp;
+    const latestDate = latestTs ? new Date(latestTs) : now;
+    const sessionCandles = realCandles.filter((c) => {
       const d = new Date(c.timestamp);
-      const day = d.getDay();
-      return day !== 0 && day !== 6;
+      return (
+        d.getDate() === latestDate.getDate() &&
+        d.getMonth() === latestDate.getMonth() &&
+        d.getFullYear() === latestDate.getFullYear()
+      );
     });
 
-    const candlesToUse = tradingCandles.length > 0 ? tradingCandles : realCandles;
+    const candlesToUse = sessionCandles.length > 0 ? sessionCandles : realCandles;
     const sampleCount = Math.min(32, Math.max(16, candlesToUse.length));
     const step = Math.max(1, Math.floor(candlesToUse.length / sampleCount));
     const sampledCandles: CandleItem[] = [];
@@ -304,10 +309,10 @@ export async function buildRealPortfolioHistory(
         timestamp: ptDate.getTime(),
         date: dateLabel,
         fullDate,
-        realProfit: isLast ? currentProfit : prof,
+        realProfit: Number((isLast ? currentProfit : prof).toFixed(2)),
         realProfitPct: isLast && currentInvested > 0 ? Number(((currentProfit / currentInvested) * 100).toFixed(2)) : profPct,
-        totalValue: isLast ? currentTotalValue : val,
-        totalInvested: isLast ? currentInvested : investedAtDay,
+        totalValue: Number((isLast ? currentTotalValue : val).toFixed(2)),
+        totalInvested: Number((isLast ? currentInvested : investedAtDay).toFixed(2)),
         tradeEvent,
       });
     }

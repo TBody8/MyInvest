@@ -52,24 +52,46 @@ function computeDailyChangeFromPositions(
 }
 
 /**
- * Combina curvas de ambos brokers alineando estrictamente por FECHA/TIMESTAMP (nunca por índice de lista)
+ * Combina curvas de ambos brokers alineando estrictamente por FECHA/TIMESTAMP (con forward-fill para evitar caídas artificiales a cero)
  */
 function mergeChartDataByDate(
   t212Points: ChartPoint[],
-  revPoints: ChartPoint[]
+  revPoints: ChartPoint[],
+  finalTotalValue: number,
+  finalTotalInvested: number,
+  finalRealProfit: number,
+  timeframe: Timeframe
 ): ChartPoint[] {
+  if (!t212Points || t212Points.length === 0) return revPoints || [];
+  if (!revPoints || revPoints.length === 0) return t212Points || [];
+
+  const isIntraday = timeframe === "D";
   const map = new Map<string, { t212?: ChartPoint; rev?: ChartPoint; order: number; date: string; fullDate: string }>();
 
   for (const pt of t212Points) {
-    const key = pt.timestamp ? String(Math.floor(pt.timestamp / (3600 * 1000))) : pt.date;
+    let key: string;
+    if (isIntraday) {
+      key = pt.timestamp ? String(Math.floor(pt.timestamp / (10 * 60 * 1000))) : pt.date;
+    } else if (timeframe === "W" || timeframe === "M") {
+      key = pt.timestamp ? new Date(pt.timestamp).toISOString().slice(0, 10) : pt.date;
+    } else {
+      key = pt.date;
+    }
     const entry = map.get(key) || { order: pt.timestamp || 0, date: pt.date, fullDate: pt.fullDate };
     entry.t212 = pt;
-    if (pt.timestamp) entry.order = pt.timestamp;
+    if (pt.timestamp && !entry.order) entry.order = pt.timestamp;
     map.set(key, entry);
   }
 
   for (const pt of revPoints) {
-    const key = pt.timestamp ? String(Math.floor(pt.timestamp / (3600 * 1000))) : pt.date;
+    let key: string;
+    if (isIntraday) {
+      key = pt.timestamp ? String(Math.floor(pt.timestamp / (10 * 60 * 1000))) : pt.date;
+    } else if (timeframe === "W" || timeframe === "M") {
+      key = pt.timestamp ? new Date(pt.timestamp).toISOString().slice(0, 10) : pt.date;
+    } else {
+      key = pt.date;
+    }
     const entry = map.get(key) || { order: pt.timestamp || 0, date: pt.date, fullDate: pt.fullDate };
     entry.rev = pt;
     if (pt.timestamp && !entry.order) entry.order = pt.timestamp;
@@ -78,24 +100,38 @@ function mergeChartDataByDate(
 
   const entries = Array.from(map.values()).sort((a, b) => a.order - b.order);
 
-  return entries.map((entry) => {
-    const p1 = entry.t212;
-    const p2 = entry.rev;
-    const totalInvested = Number(((p1?.totalInvested || 0) + (p2?.totalInvested || 0)).toFixed(2));
-    const totalValue = Number(((p1?.totalValue || 0) + (p2?.totalValue || 0)).toFixed(2));
-    const realProfit = Number((totalValue - totalInvested).toFixed(2));
+  // Mantenemos el último valor y coste conocidos de cada broker para no convertirlos en cero
+  let lastT212Val = t212Points[0]?.totalValue ?? 0;
+  let lastT212Inv = t212Points[0]?.totalInvested ?? 0;
+  let lastRevVal = revPoints[0]?.totalValue ?? 0;
+  let lastRevInv = revPoints[0]?.totalInvested ?? 0;
+
+  return entries.map((entry, idx) => {
+    if (entry.t212) {
+      lastT212Val = entry.t212.totalValue;
+      lastT212Inv = entry.t212.totalInvested;
+    }
+    if (entry.rev) {
+      lastRevVal = entry.rev.totalValue;
+      lastRevInv = entry.rev.totalInvested;
+    }
+
+    const isLast = idx === entries.length - 1;
+    const totalInvested = isLast ? Number(finalTotalInvested.toFixed(2)) : Number((lastT212Inv + lastRevInv).toFixed(2));
+    const totalValue = isLast ? Number(finalTotalValue.toFixed(2)) : Number((lastT212Val + lastRevVal).toFixed(2));
+    const realProfit = isLast ? Number(finalRealProfit.toFixed(2)) : Number((totalValue - totalInvested).toFixed(2));
     const realProfitPct = totalInvested > 0 ? Number(((realProfit / totalInvested) * 100).toFixed(2)) : 0;
 
-    let cleanFullDate = p2?.fullDate || p1?.fullDate || entry.fullDate;
+    let cleanFullDate = entry.rev?.fullDate || entry.t212?.fullDate || entry.fullDate;
     if (totalInvested > 0) {
       cleanFullDate = cleanFullDate.replace(/\s*\(Sin fondos[^)]*\)/gi, "").trim();
     }
 
-    const tradeEvent = p2?.tradeEvent || p1?.tradeEvent;
+    const tradeEvent = entry.rev?.tradeEvent || entry.t212?.tradeEvent;
 
     return {
       timestamp: entry.order || undefined,
-      date: p1?.date || p2?.date || entry.date,
+      date: entry.rev?.date || entry.t212?.date || entry.date,
       fullDate: cleanFullDate,
       realProfit,
       realProfitPct,
@@ -263,7 +299,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       // Combinar gráficos cronológicamente alineados por fecha
       const combinedCharts: Record<string, ChartPoint[]> = {};
       for (const tf of timeframes) {
-        combinedCharts[tf] = mergeChartDataByDate(t212ChartData[tf] || [], revolutChartData[tf] || []);
+        combinedCharts[tf] = mergeChartDataByDate(
+          t212ChartData[tf] || [],
+          revolutChartData[tf] || [],
+          finalTotalValue,
+          finalTotalInvested,
+          finalRealProfit,
+          tf
+        );
       }
       finalChartData = combinedCharts as Record<Timeframe, ChartPoint[]>;
       finalDailyChange = computeDailyChangeFromPositions(finalPositions, finalTotalValue);
