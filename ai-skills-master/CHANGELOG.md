@@ -1,0 +1,696 @@
+# Changelog
+
+All notable changes to ai-skills will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Versions track the upstream [whetstone plugin](https://github.com/iliaal/whetstone).
+
+## [5.1.3] - 2026-10-25
+
+### Changed
+- `ia-code-review` separated staged and unstaged review coverage, retrieved every PR discussion channel and page, and required caller adoption before honoring repository-defined policy exceptions. It also added parser-agreement checks, Bun startup isolation, and Claude credential-file exclusions for external review.
+- `ia-agent-native-architecture` preserved tool-call identity through checkpoints and compaction, separated runtime data from trusted instructions, followed MCP discovery cursors, and strengthened parity and recovery tests. Architecture audits separated structural coverage from evidence of emergent capability or improvement over time.
+- `ia-php-laravel` added guidance for expanded input-key limits, reused object identities in `once()`, `Http::batch()` failure accounting, relation restore writes, PostgreSQL cache-lock contention, and associative-array bypasses in scalar `Rule::anyOf()` alternatives. Parallel database tests retained Laravel's per-worker isolation.
+- `ia-nodejs-backend` covered client-safe transport errors and incomplete-download signaling. `ia-postgresql` required whole-transaction retries and accounted for PostgreSQL 18 skip scans. `ia-python-services` isolated user-level uv settings while preserving repository configuration.
+- `ia-verification-before-completion` required final frontend checks against a fresh production build.
+- `ia-md-docs` recognized effective Codex override files and nested guidance. `ia-reflect` deduplicated inherited evidence by originating incident.
+### Fixed
+- `ia-git-worktree` supported bare repositories while retaining ownership and cleanup safeguards. Its manager and `ia-planning` preserved existing ignore entries when `.gitignore` lacked a trailing newline.
+- `ia-c-systems` corrected claims about function-specific optimization and what a clean sanitizer run proves. `ia-rust-systems` corrected CORS ordering, tracing field exposure, capacity errors, and retry boundaries.
+- `ia-react-frontend` corrected asynchronous-effect tests and Tailwind class-order configuration. `ia-test-audit` required a failing control to establish that type assertions run; `ia-writing-tests` preserved the tested command's exit status before matching output.
+- Skill routing narrowed unrelated matches for `ia-php-laravel`, `ia-planning`, `ia-simplifying-code`, and `ia-reflect`, and expanded missed requests for debugging, frontend design, review feedback, verification, shell scripting, agent architecture, and writing. Added 155 trigger regression cases.
+
+## [5.1.2] - 2026-10-19
+
+### Added
+- `ia-verification-before-completion` gained a performance-measurement reference covering completed work, error rates, load-generator limits, comparison objectives, scale checks, and attribution limits; `ia-debugging` routes to it.
+### Changed
+- `ia-code-review` grades config-level CORS wildcards with credentials (Starlette/FastAPI `allow_origins=["*"]`, npm `cors({ origin: true })`) as origin reflection, flags trailing-newline anchors in Python and PHP validators, hidden code in comment-only hunks (U+2028, a `//` comment ending in `\`, bidi controls), and multer's unbounded `fieldNestingDepth` (2.2.0+) and `fieldArrayIndexLimit` (2.3.0+). External reviews that report coverage gaps are incomplete, not clean, and get one re-run before the loop stops. Gitlink bumps report the imported range, and settle flows need a kind-by-action test matrix.
+- `ia-nodejs-backend` rewrites the NestJS scoped-enhancer rule with exact version boundaries through v12.2.0, warns that a scoped `APP_FILTER` misses middleware and body-parse errors on every version, and covers the SSE error bypass and `ValidationPipe` input echo.
+- `ia-php-laravel` explains how a failed queue push strands a `ShouldBeUnique` lock, requires a finite `uniqueFor`, notes synchronous Mercure publishing from v13.36.0, and marks fixes that shipped in v13.35.0 and v13.36.0 as released.
+- `ia-debugging` adds a legitimacy test: when the triggering state is valid, the code that broke on it is the root cause.
+- `ia-writing-tests` adds contract tests against the shared schema, single-fault invalid-input cases, and order-preserving bisection for test polluters. `ia-test-audit` sets a bar for deleting a test.
+- `ia-receiving-code-review` asks all clarifications first and continues only clear items that no reading of an unclear item could touch.
+- `ia-writing` gains a proofread and point-edit mode that changes only clear errors or the named span.
+- `ia-frontend-design` checks H1 line count at phone width, adds dashboard delta rules, keeps group boundaries in data-dense UIs, and lists conflicts between a supplied mockup and an existing token system before writing styles.
+- `ia-brainstorming` asks open interview questions as plain chat and keeps the question tool for choices with two to four real options; `/ia-brainstorm` and `/ia-plan` follow it.
+- `ia-agent-native-architecture` corrects its sed command-gate rule (label and branch-target tokens also end at whitespace), pins every parsed `git diff` against user config, and adds side-effect state and non-TTY rules for agent-facing CLIs. `ia-git-worktree` and `ia-verification-before-completion` pin their patch recipes the same way.
+- `ia-orchestrating-swarms` resumes a crashed agent once before relaunching and treats an orchestrator message as not user consent. `ia-reflect` counts recurrence only from user and tool records that do not reproduce instruction files, and exempts explicit reusable user corrections. `ia-planning` derives unresolved interface contracts from caller interactions. `ia-rust-systems` gives every OpenTelemetry exporter its own filter. `ia-linux-bash-scripting` covers coordinated reads of shared state.
+- `ia-python-services` no longer triggers on prompts that only mention `python` near an unrelated `cli` path.
+
+## [5.1.1] - 2026-10-12
+
+### Changed
+- `ia-git-worktree` copies `.env` files only when the base is the default branch or a local branch that already contains the fetched commit, fetches branch bases as `refs/heads` so a same-named tag cannot replace them, never follows a symlink while copying env files, and tells agents to skip install scripts and plugins in untrusted trees.
+
+## [5.1.0] - 2026-10-11
+
+### Added
+- `ia-agent-native-architecture` gained an intervention-evaluation reference for testing whether a hook, prompt rule, or skill changes outcomes: off, real, and placebo arms; pre-registered sample size; paired exact tests; and controls the intervention cannot reach.
+- `ia-frontend-design` gained an inline SVG reference covering per-instance IDs, token inheritance, decorative accessibility, and `preserveAspectRatio` choices.
+- `ia-code-review` gained review profiles for agent packages (`SKILL.md`, hooks, `.mcp.json`, settings) and for MCP server package pins.
+### Changed
+- `ia-code-review` security guidance now pins SSRF connections to validated addresses and rechecks every redirect, parses URLs before redirect checks, scopes XXE findings to parser versions and enabling flags, and adds rows for OAuth callbacks, forwarded-header trust, localhost token authentication, prototype pollution, script-context JSON, and GitHub Actions comment, artifact, cache, and runner risks. Repository rationale no longer suppresses a finding without caller authority.
+- `ia-agent-native-architecture` replaced all Swift examples with TypeScript and corrected hook semantics, prompt and agent hooks, MCP long-running calls, mobile cost caps, cache-preserving context refreshes, and trust tiers for user messages.
+- `ia-writing` now checks that numbers, conditions, caveats, and claim certainty survive an edit, and no longer recommends inventing sources, actors, or voice.
+- `ia-frontend-design` and `ia-react-frontend` dropped fabricated window chrome and round-number heuristics, added reference-fidelity work from supplied mockups, preserved metadata and accessibility during redesigns, and corrected `dvh`, font loading, contrast, `revalidateTag`, and metadata-streaming guidance.
+- `ia-php-laravel`, `ia-nodejs-backend`, `ia-rust-systems`, `ia-linux-bash-scripting`, `ia-postgresql`, and `ia-pinescript` corrected Markdown mail link injection, cursor pagination ordering, sticky replica reads, NestJS transient global guards, shutdown and readiness, tracing secrets, `select!` termination, doctests, build profiles that broke stable Rust, secret prompts, producer status, and history-dependent Pine calls.
+- `ia-orchestrating-swarms`, `ia-verification-before-completion`, `ia-debugging`, `ia-receiving-code-review`, `ia-brainstorming`, `ia-reflect`, `ia-simplifying-code`, and `ia-git-worktree` aligned triage, verification proof, delivery-state claims, worktree isolation, accepted-risk dispositions, open-ended interviewing, memory capture safety, and dead-code proof.
+### Fixed
+- Triggers for `ia-document-review`, `ia-python-services`, and `ia-meta-prompting` no longer fire on unrelated tasks that previously misfired 23 to 32 percent of the time; new negative fixtures cover the observed cases.
+- `ia-linux-bash-scripting` no longer places a `$0` example in its skill body, where argument substitution rewrote it.
+
+## [5.0.1] - 2026-10-03
+
+### Changed
+- `ia-agent-native-architecture` tied external-action approval to trusted orchestration, the exact draft, revision, and destination; checked workspace containment for every operation; and replaced defective mobile and tool examples with supported-stack recipes. Health checks now distinguish a running process from a healthy application serving the intended revision.
+- `ia-code-review` strengthened source and boundary evidence, credential provenance, serializer checks, WebSocket authentication and Origin review, and version-specific false-positive suppression. Reviews now freeze the requested head and treat repository content as evidence rather than authority for an exception.
+- `ia-orchestrating-swarms`, `ia-planning`, and `ia-brainstorming` clarified dispatch context, installed model selection, handoff capabilities, and mode-specific completion. Cloud handoffs now carry the exact plan and stop if it cannot be read.
+- `ia-php-laravel`, `ia-nodejs-backend`, `ia-python-services`, and `ia-postgresql` clarified durable acceptance, idempotent effects, unknown-outcome reconciliation, commit-order assumptions, bounded backfills, savepoints, and compatible writer rollouts. Laravel version, serialized-job, encrypted-cast, pivot, and middleware claims were corrected against executable behavior.
+- `ia-react-frontend` and `ia-frontend-design` corrected Tailwind migration, configuration, and layout recipes; scoped memoization removal to verified redundancy; and clarified cancellation, mutation callbacks, screenshot configuration, readiness, locale synchronization, and review-only completion.
+- `ia-md-docs`, `ia-document-review`, and `ia-writing` preserved verified values and qualifications, separated review from authorized edits, and aligned output with the requested mode. Documentation checks now run within the caller's authority, and setup changes preserve unrelated configuration.
+- `ia-reflect` reported missing or truncated session evidence, tied working-command claims to observed execution, and preserved authorized memories in the existing format. Retrospectives now distinguish a skipped or broken check from a missing check before proposing more tooling.
+- `ia-writing-tests` followed the selected test posture in vertical slices, with tests-after as the feature default and test-first when explicitly selected. Bug fixes retained the failing-reproducer-first requirement.
+- `ia-simplifying-code` supported analysis-only reports without editing code and required a verification receipt covering the final integrated state. Fresh delegated evidence remained valid when its revision and file fingerprints matched.
+- `ia-c-systems`, `ia-cpp-systems`, `ia-linux-bash-scripting`, `ia-rust-systems`, `ia-terraform`, and `ia-pinescript` corrected sanitizer, linker, header-filter, producer-status, option-parser, load-shedding, panic, interning, stdout, mocked-apply, test-selection, and drawdown examples. Recipes now state the runtime and platform evidence needed for their guarantees.
+### Fixed
+- `ia-git-worktree` fetched into an invocation-owned ref instead of relying on shared FETCH_HEAD, preserved complete commit ownership, and recorded the full integrated range for rollback. `ia-verification-before-completion` now materializes the selected base-to-owned change and verifies its bytes without including caller-owned hunks or files.
+- `ia-debugging` sanitized credential-bearing Git remotes before printing or recording diagnostics. Behavioral tests cover redaction and the published isolated-verification recipe, including mixed ownership and an outside-manifest rejection.
+- Triggers for `ia-python-services`, `ia-nodejs-backend`, `ia-react-frontend`, `ia-writing`, and `ia-md-docs` gained bounded context and negative controls. Added 35 regression cases for uv, Node middleware, frontend locales, prose editing, and DOCS.md; all 694 trigger cases passed.
+- `ia-receiving-code-review` and `/ia-resolve-pr` verified submitted reply bodies and required an authorized push containing fixes before resolving threads. The command distinguished partial or unavailable retrieval from complete review-thread data. Browser and video workflows now report the served revision, actual capture bounds, collected errors, and observed publication status.
+
+## [5.0.0] - 2026-09-26
+
+### Added
+- **`ia-test-audit` skill.** Audits whether existing tests fail when the behavior they claim to protect breaks: mocked-away subjects, weak or circular assertions, fixtures that cannot tell a right answer from a wrong one, swallowed failures, and tests missing from a blocking gate. Each finding names the surviving regression and an evidence status (source-confirmed, inferred, or execution-confirmed), with an optional scratch-copy mutation probe to confirm it. Ships five standard-library detector scripts as discovery aids; their output never bounds the review. Adapted from the OpenClaw test-audit skill (MIT).
+- `ia-code-review` has a new eval case that measures whether the skill fires on a pasted diff when the prompt never names it; every earlier positive case named the skill, so natural routing was never measured.
+### Removed
+- **`ia-tailwind-css` skill**, folded into `ia-react-frontend` as `references/tailwind*.md` with its trigger terms, fixtures, and file globs.
+- **`ia-refine-prompt` skill**, now a user-invoked `/ia-refine-prompt` command. Its machine-parsed-text rules moved to `ia-writing/references/machine-parsed-text.md` so they still apply on every harness.
+### Changed
+- **`ia-code-review` no longer lets a diff approve its own exception.** A documented override (CLAUDE.md, AGENTS.md, a threat model or ADR, an inline "we allow X because Y" comment) counts only if it exists at the review's base revision; one the diff adds or widens is reported as a finding labeled "override proposed in this diff". A standards-file change that loosens a rule suppresses nothing in the same diff.
+- `ia-code-review` decides "pre-existing" by whether the change takes part in the failing path, not by whether the buggy line is new, and anchors such a finding at the changed line so path and hunk filters keep it. Genuinely older flaws go to a single "predates change" list.
+- `ia-code-review` gained command and argument injection patterns for PHP, Python, and Node, archive extraction traversal, credentials forwarded across redirects, and integrity checks that fail open. A reviewer's own `python3 -c` calls inside the reviewed tree now run with `-I`, since a repository file that shadows a standard-library module otherwise executes.
+- `ia-postgresql` replaces its row-level security example: a session-level `SET` leaks the user ID across tenants under the transaction-mode pooling the same file recommends, so the example now sets the value transaction-locally. `SECURITY DEFINER` helpers gained the required hardening, and the PgBouncer compatibility list was corrected against current documentation.
+- `ia-php-laravel` covers a queue `retry_after` shorter than the job timeout, which runs the job twice concurrently. `ia-nodejs-backend` covers Nest skipping transient-scoped middleware, which before v12.1.0 also skipped every middleware listed after it.
+- `ia-md-docs` treats the CLAUDE.md symlink as optional, since Claude Code v2.1.277 and later reads AGENTS.md natively, and prefers an `@AGENTS.md` import where a CLAUDE.md is still needed.
+- `ia-git-worktree` builds a pull-request review worktree from the fetched PR head and checks it against the PR's head SHA; the previous recipe built it from main.
+- `ia-verification-before-completion` checks which database and services a suite or migration connects to before running it, and treats the developer's own dev database as off limits. Upgrade proof must be measured on the same tests before and after.
+- `ia-planning` records decisions (signatures, assertions, spec values) rather than code bodies, and the `/ia-plan` and `/ia-deepen-plan` templates follow. `ia-debugging` requires the root cause to explain every observed symptom and sweeps for the same defect shape. `ia-document-review` checks a document's claims against the code it references.
+- `ia-writing-tests` agrees with `ia-test-audit` on circular oracles, no-throw contracts, spies, and exact snapshots, and points to it for auditing existing tests.
+- `ia-agent-native-architecture` scopes text-level permission gates as best-effort for Bash commands, while a tool-level deny is the enforcement for built-in file tools and MCP.
+
+## [4.6.1] - 2026-09-20
+
+### Changed
+- **`ia-code-review` gained a symmetric evidence bar.** The protected-subject list now covers authentication and authorization, injection, secrets exposure, cryptography, and data loss alongside the existing memory-safety and concurrency classes, and rejecting a finding in any of them requires a refuting `file:line`, version-specific documentation, commit provenance, or a discriminating test result. A generally passing suite and an assumed framework guarantee are named as insufficient. A rationale-backed owner override is recorded as its own disposition rather than being forced to `rejected` or `unresolved`, and that honoring is scoped to diff review: a full-repository audit re-derives the stated reason against current source.
+- `ia-code-review` treats a refused, empty, malformed, timed-out, or nonzero-exit external review as unavailable rather than clean, distinguishes an operator's deliberate opt-out from a failure, and caps the run-until-clean loop at two consecutive unavailable results instead of iterating forever.
+- `ia-code-review` excludes credential-bearing paths from any external dispatch unconditionally and by path alone, while keeping them under local review so a committed-secret finding stays reachable.
+- `ia-code-review` grades a defect the specification is silent on by its effect on a reasonable user, requires a quoted specification or pull-request line to invoke the deferred-scope exception, and asks a report's Residual Risks section to itemize every behavior consciously set aside.
+- `ia-verification-before-completion` now states that a checker which failed to run is an error rather than a skip or a clean result, and that a weighted score cannot redistribute a missing category into a full pass or compare a trend across two runs whose checked-category sets differ.
+- `ia-orchestrating-swarms` names two delegation stop conditions: work the caller could finish in a handful of tool calls with no independent-review, concurrency, or context-isolation value, and racing a dispatched task by also running it inline.
+- `ia-agent-native-architecture` documents that a PreToolUse hook fires once per tool call rather than once per batch, so a stateful gate cannot lock a parallel batch, and adds an output-data-minimization principle covering exception text and detection-tool output.
+- `ia-php-laravel` covers the `AuthenticateSession` middleware baselining a session's password hash on first pass rather than at login, which silently defeats logging other devices out when the login route sits outside the middleware, plus lost-connection behavior for Redis pipelines and transactions.
+- `ia-nodejs-backend` documents stream write backpressure, `ia-python-services` covers an awaitable returned into a synchronous dispatch registry, `ia-postgresql` adds plan assertions as regression tests and a bounded per-key snapshot with cursor tailing, and `ia-linux-bash-scripting` requires an agent-launching script to default to its most restrictive approval mode.
+- `ia-writing` produces an Edit-mode changelog only when the caller asks for one and keeps it outside any delivered artifact, and its pull-request guidance gained a reversibility and blast-radius section plus a wider set of visual shapes.
+### Fixed
+- `ia-code-review` accepted a bare passing test name as disproof of a finding, and required an independent re-read only for critical and important severities, so a medium-severity injection or secrets finding could be dropped without one.
+- `ia-code-review` routed only `.py` files to the Python profile, and classed an unused import as a safe automatic deletion with no prompt, which removes a re-exported symbol from a `.pyi` stub. Stub files now route correctly, and the exemption is scoped to self-aliased imports and `__all__` members rather than all unreferenced imports.
+- The `/announce` command gated on a five-dimension writing score removed from `ia-writing` in July, and absent everywhere since. Replaced with the audit output the skill actually returns.
+
+## [4.6.0] - 2026-09-17
+
+### Added
+- **A `claude plugin eval` suite for the `ia-code-review` skill** at `plugins/whetstone/evals/`: five positive cases (a PHP IDOR diff, a Python two-bug diff, a TypeScript file audit, a brief carrying reviewer questions, and a clean diff that must come back ready to merge) and two negatives that must not produce a review verdict. Graders check the behaviours the skill claims -- the skill fired or stayed silent, CR ids present, a verdict line, the specific defect found and correctly located, nits ranked below bugs, no fabricated findings.
+- `ia-code-review` gained a Composer review reference covering production requirements, platform constraints, autoloading, installation, and resolution and packaging checks, with compatible library ranges preserved and concrete deployment evidence required.
+### Changed
+- `ia-code-review` replaced generic PHP style and framework assumptions in its language profiles with evidence-conditioned coercion, null and key, by-reference iteration, array, lifecycle, and input-flow checks.
+- Four skills now name the harness question tool when they block on a user decision. `ia-document-review`, `ia-compound-docs`, and `ia-orchestrating-swarms` name `AskUserQuestion` for Claude Code and `request_user_input` for Codex, with numbered options in chat as the fallback. A bare "ask the user" degraded silently on three of the four distribution targets.
+- `ia-spec-flow-analyzer` now names `ia-document-review` as the general structural pass and itself as the flow-specific complement; `ia-database-guardian` defers Postgres query, index, and type patterns to `ia-postgresql` and scopes itself to migration-safety review. Both boundaries live on the agent side, because skills ship standalone where the agent does not exist.
+- `ia-kieran-reviewer` gained a report format binding its findings to `ia-code-review`'s severity ladder, sequential CR ids, measured `file:line` citations, and verdict vocabulary, rather than carrying a duplicate template.
+- `ia-git-worktree` rewrote its ownership rules in objective voice, and `ia-meta-prompting` scoped its `/ia-verify` mention to Claude Code and dropped a second-person line.
+### Fixed
+- `ia-document-review` had no Step 7: an earlier reference offload removed the reader test without renumbering what followed. `ia-simplifying-code` gave two different orderings of one priority list in adjacent lines, and `ia-python-services` stated its coverage target twice.
+- The eval suite's skill-fired graders asserted only that some skill ran, and the harness excluded them from scoring because no arm was declared -- so nothing verified that `ia-code-review` specifically fired. They now pin the skill name and score in both arms. The clean-diff grader was also stricter than the severity ladder it tests, which made the case unpassable unless the skill under-reported against its own rules.
+
+## [4.5.3] - 2026-09-13
+
+### Changed
+- `ia-agent-native-architecture` gained two references: CLI-as-agent-interface design (stdout/stderr/exit-code contract, TTY-aware JSON, progressive schema disclosure, safety tiers) and an operator-approval loop for external sends (content-hash approval binding, single-winner claim, terminal `unknown`). MCP tool design now covers bounded-scan incompleteness and live-action opt-in; hooks guidance covers Node stdout flushing and CLI flag parsing in gates.
+- `ia-orchestrating-swarms` covers resource reach versus authorization, orchestrator context exhaustion with a disk handoff to leaf subagents, bounded result collection, lock-free right-of-way between independent sessions, mergeable registry shapes, and harness-injected instruction files. Nested dispatch is described as unreliable rather than impossible.
+- `ia-code-review` adds `--no-textconv --no-ext-diff` to every review-content `git diff` and `git show`, reports embedded instructions as findings, redacts credential values in reports, gives module passes full file bodies, defines an `uninspected` state, scopes reviewer independence to corroborating passes, and adds agent-lifecycle discipline for multi-agent reviews.
+- `ia-nodejs-backend` gained an observability-tracing reference: span kinds, the SERVER/CLIENT status asymmetry for 4xx, Collector-side sampling, a metric cardinality budget, and a never-instrument list.
+- `ia-frontend-design` asks for design register and mode, routes greenfield product work to an established component system before bespoke design, drops Geist and Outfit from the recommended faces, and catalogs crushed tracking, unthemed browser chrome, and nested cards as tells.
+- `ia-php-laravel` documents `Queue::route()`, the Mercure broadcast driver, vector search on pgvector/MariaDB/MongoDB, and the 13.31.0 change to closure-form `wherePivot()`. `ia-tailwind-css` covers `color-mix()` alpha tokens and `--color-*: initial`. `ia-python-services` marks ORJSON/UJSON responses deprecated and documents native SSE and `scope="function"` dependencies. `ia-terraform` names OpenTofu-only encryption and backend variables. `ia-rust-systems` adds tokio-console. `ia-linux-bash-scripting` reports a missing shellcheck as skipped, not passed.
+- `ia-planning` bans wall-clock estimates in favor of Small/Medium/Large scope sizing (triage and plan templates aligned), defers to an existing spec system's format, and requires execution approval to live in the plan artifact. `ia-brainstorming` resolves fact questions by inspection mid-interview. `ia-writing-tests` names horizontal slicing as an anti-pattern. `ia-receiving-code-review` reads Conventional Comments prefixes. `ia-simplifying-code` prefers deletion and treats a no-op pass as a valid result. `ia-writing` flags process narration and bare tallies while keeping counts that are evidence. `ia-verification-before-completion` rules out the task's own formatters and hooks before calling a failure pre-existing.
+### Fixed
+- `ia-compound-docs` and `ia-file-todos` dropped `disable-model-invocation` and the Codex `allow_implicit_invocation: false` twin: the harness refused the explicit `Skill()` calls four commands make into them. The Codex regression suite now asserts no skill carries either flag, and README describes the current state.
+
+## [4.5.2] - 2026-09-07
+
+### Changed
+- Expanded practical guidance in `ia-code-review`, `ia-writing-tests`, `ia-debugging`, and `ia-verification-before-completion` for review evidence, regression oracles, baseline comparisons, and completion claims. Moved detailed guidance into conditional references to keep skill entrypoints within the shared token budget.
+- Expanded framework and systems references in `ia-php-laravel`, `ia-postgresql`, `ia-react-frontend`, `ia-tailwind-css`, `ia-c-systems`, `ia-cpp-systems`, and `ia-rust-systems`, including persistence pitfalls, concurrency, test selection, and API boundaries.
+- Aligned `ia-planning`, `ia-brainstorming`, `ia-receiving-code-review`, `ia-document-review`, and `ia-reflect` with the requested scope and existing authorization. Reviews and diagnoses retained their read-only scope unless changes were authorized.
+- Updated `ia-orchestrating-swarms` for current Claude team operations, exclusive file ownership, parent-owned integration, and fresh independent reviewers. Aligned the same ownership rules in parallel PR and todo resolution commands.
+### Fixed
+- Preserved dirty, ignored, locked, current, and unowned worktrees in `ia-git-worktree` cleanup. Corrected main-checkout detection and made directory changes explicit to the calling shell.
+- Corrected authorization and rollback examples in `ia-agent-native-architecture`, path containment in `ia-debugging`, and atomic configuration replacement in `ia-linux-bash-scripting`.
+- Corrected examples in `ia-rust-systems`, `ia-terraform`, `ia-php-laravel`, `ia-postgresql`, `ia-tailwind-css`, and `ia-code-review`, including internal-error redaction, migration history, missing-versus-null values, query-plan assessment, and browser CORS behavior.
+- Preserved boolean types and evaluation counts in `ia-simplifying-code`. Clarified untrusted screenshot content, real metrics, and server/client composition in `ia-frontend-design`.
+- Repaired structured YAML validation in `ia-compound-docs` and completion/dependency handling in `ia-file-todos`. Kept skipped triage items pending.
+- Fixed missed triggers for `ia-planning`, `ia-python-services`, `ia-orchestrating-swarms`, and other process and language skills, with positive and negative regression fixtures and coverage through the actual injection hook.
+- Paginated PR comments, reviews, review threads, and nested replies, and rejected incomplete or failed responses. Corrected the resolver's GraphQL reply contract and the numeric REST comment-ID example in `ia-receiving-code-review`; both used approved reply text from a file.
+
+## [4.5.1] - 2026-09-06
+
+### Added
+- Swarm wave contract reference: five conditions for parallel implementers in one working tree (committed baseline, exclusive ownership of hidden write surfaces such as lockfiles and codegen, no worker git operations, orchestrator-owned verification, scoped rollback), a worktree base-SHA pre-check, and a five-round QA ladder that hands off to a fresh implementer on a stronger model after round three and forces a disposition on every open finding at the cap
+- Verification skill: classify each deliverable as diff-verifiable, cross-repo, external-state, or content-shape before claiming it done; a concrete path is never "unverifiable", and code that handles a deliverable is not the deliverable. The skill also now owns the project-declared pre-push gates rule (read CLAUDE.md, AGENTS.md, and CONTRIBUTING.md, run every declared check, stop on the first unmet one)
+- Code review: quote-or-downgrade (a finding that can't quote its motivating line is capped as speculative; ORM and metaclass symbols quote the meta-construct), reachability defined as a public-interface-to-first-party-sink path, the precondition-subsumes-conclusion circularity check, repeated-switch detection, and three catalog traps (exhaustive primitive-hit accounting, vendored and submodule ownership, destructive replace on an empty result)
+- Security patterns: JWT key-confusion via `kid`/`jku`/`x5u`/embedded `jwk`, destructive-path authorization (allowlisted root, depth floor, ownership evidence), mass assignment and IDOR-by-sibling-handler as authorization bugs, an ECB/static-IV/home-rolled-crypto row, and a version-gated false-positive table (PHP `assert` string eval, `preg_replace /e`, PyYAML `FullLoader`, libxml2 XXE defaults, Next.js CVE-2024-34351) with the real CVE preconditions spelled out
+- Debugging: a performance-regression lane (numeric baseline, profiler attribution, bisect against the measurement); a test-first exception when no reachable seam can exercise the bug as it triggered; reproduction must match the exact reported symptom
+- Test writing: the change-detector anti-pattern, when trivial code earns a test, and a mutation check in the closing checklist
+- Compound docs: the counterfactual capture gate (capture only if a future engineer reading the final code, tests, comments, and existing docs would still repeat the mistake) now lives in the skill, so it ships to Codex and .agents too; `/ia-compound-refresh` gained an opt-in worth lens that culls docs the codebase now carries on its own
+- Hooks reference: matcher semantics (`"*"`, `""`, or omitted match all; anything else is an unanchored JS regex), the `if` permission-rule filter, `PermissionDenied` with its `retry` decision, and the fail-closed vs fail-open boundary (decision logic fails closed; bookkeeping failure fails open with a named warning)
+- Planning: cut-first vs protect table for context management, task-critical content placed last, a standalone-readability test on the Objective, and an optional `Spec:` field
+- Laravel: `Concurrency::run()` ships hidden Context values into the child process environment; Bash: anchored allowlist on path components before destructive interpolation, reject a single `--out` with multiple targets; Node: `erasableSyntaxOnly` constraints and caller-supplied-server listener teardown; PostgreSQL: FK version gates for partitioned tables; infra and deployment agents: error-budget consumption gate and burn-rate hold/rollback bands
+- Frontend design: the SaaS-card-kit composite, single-word headline accents, middle-dot meta strings, and trailing arrows named as tells; eyebrow tags demoted from default fix to a conditional
+- Six should-not-trigger fixtures for orchestrating-swarms drawn from the real misfires
+
+### Changed
+- Orchestrating-swarms trigger regex tightened: `fan-out` now needs an agent, worker, or reviewer object in the same clause, and subagent mentions only fire in imperative dispatch forms. Real-corpus false fires went from 30 of 30 to 0 of 30 with fixture F1 unchanged at 1.0
+- The branch-finish menu in `/ia-work` and git-worktree no longer offers Discard; it acts on discard only when asked explicitly, still behind a typed confirmation
+- Orchestrating-swarms body trimmed 25,030 to 22,084 bytes by relocating eleven cold clusters into references, the first shrink after four consecutive growth syncs
+- Hooks reference corrected against the live docs: 33 hook events, all declarable in agent frontmatter (was "27, only 6 supported"); `Stop` converts to `SubagentStop` in a spawned subagent; `UserPromptSubmit` fires only when the agent runs as the main session
+- PR descriptions: program-first placement made conditional; the file's own "Do" example no longer opens with the "This PR" construction the file bans
+- Node type-stripping guidance updated: default from Node 22.18 and 23.6, flag needed only on 22.6 through 22.17 and 23.0 through 23.5
+- Writing skill: mannered-prose, density, under-formatting, and unmarked-quote checks
+
+### Fixed
+- Five rule conflicts the sync introduced: quote-or-downgrade vs the protected-subject exception, capability-gain vs the internal-network no-downgrade floor, diff-anchored disabled-protection vs full-repo audits, "all events declarable" vs "not inside agents", and a 3-attempt handoff template vs the 5-round ladder
+- Two false claims from the sync's own apply briefs: a linked worktree's index does not live in the shared git common dir (it is per-worktree), and Laravel's `dehydrate()` does keep hidden values under a separate key (the leak is `ProcessDriver` encoding both into one env var)
+- Worker status vocabulary now says where partial, stub, and unverifiable work lands (`DONE_WITH_CONCERNS` or `BLOCKED`, never `DONE`); the verification skill links its ledger states to its deliverable outcomes
+
+## [4.5.0] - 2026-08-29
+
+### Added
+- 130 reviewed, provenance-stripped knowledge rules across 18 skills: Laravel validation/queue/cast/testing traps, C/C++ sanitizer and lifetime discipline, test-methodology anti-patterns, verification gates (zero-executed suites, binary identity, rebase survival), React Query/test-runner rules, Rust test isolation, Node/Python resilience, git worktree ownership, PostgreSQL migration locks, bash secret/exit-status discipline
+- Four reference files extracted from oversized skill bodies: writing-tests isolation/sandbox traps and false-pass oracle traps, orchestrating-swarms cross-run coordination (TTL leases, identifier minting), agent-native durability and attestation
+- Four-status worker vocabulary (DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_CONTEXT) now actually defined in orchestrating-swarms -- two files pointed at owners that never defined it
+
+### Changed
+- `paths:` frontmatter unlocked on five language skills that were auto-load-gated out of their own advertised scope: tailwind-css gains .tsx/.jsx/.html/.vue/.blade.php, cpp-systems gains .h and CMake files, python-services gains pyproject.toml/ruff.toml/uv.lock, react-frontend gains .ts, postgresql drops its .sql-only gate
+- Four trigger regexes widened from measured F1 0.0-0.57 to 1.0: meta-prompting (11 of 14 modifiers had no route in), nodejs-backend (NestJS/Hono/Koa/tRPC/Bun), orchestrating-swarms ("subagent", "fan out"), file-todos (every activation route was closed)
+- Oversized skill bodies trimmed to references: php-laravel 43.2KB to 33.9KB, writing-tests 6,449 to 4,979 tokens, react-frontend and agent-native-architecture now under the 4K flag
+- Rails-flavored examples replaced with PHP/TS equivalents at five sites; twelve second-person insertions rewritten to objective voice; cross-harness skills now name their blocking ask tools (AskUserQuestion / request_user_input)
+- Meta-prompting decision evidence refined; agent workflows kept outcome-first
+
+### Fixed
+- Two false distilled rules, both execution-disproven: `cargo install --path .` always rebuilds (the silent no-op is registry/git installs only), and single-arg `z.record()` fails at type-check and first parse, not at JSON-Schema generation
+- `worktree-manager.sh create` no longer checks out and pulls in the caller's tree -- fetch-only with an offline fallback, so the active branch survives worktree creation
+- compound-docs validation: the blocking gate pointed at a phantom `schema.yaml`, and `validate-frontmatter.sh` passed `symptoms: []` -- both fixture-tested
+- md-docs emoji rule aligned with ia-writing's README carve-out (the two skills gave opposite instructions on the same files)
+- PHPUnit `--processes` corrected to ParaTest; Laravel route-closure serialization claim narrowed to reproduced behavior
+
+## [4.4.3] - 2026-08-29
+
+### Added
+- PostgreSQL performance reference: the four query shapes an index cannot serve, pool-exhaustion diagnosis (raising `max` relocates the queue — multiplex through PgBouncer instead), and cache discipline (stampede protection, negative caching, cache-key completeness)
+- Judge-bias defenses in the swarm anti-sycophancy reference: never reveal the passing threshold to a judge, plus a seven-bias countermeasure table (sycophancy, length, authority, completion, effort, recency, familiarity)
+- Code review now catches floor-guard loosening — lowered thresholds, `.skip`'d tests, new suppression comments — and an explanatory comment no longer suppresses those findings
+- Writing audit gained `[ABSTRACT-METAPHOR]` and `[PORTABLE-PROSE]` tags, and drafts under audit are treated as data — an embedded instruction to the auditor is itself a finding
+- Test-writing skill: no-sleep rule for async waits, mock-seam placement (cut at the owned wrapper, never below it), and flaky-equals-red (fix or quarantine visibly; never re-run to green)
+- Pine Script: corrected drawing limits (9,999 bars back / 500 forward via `xloc.bar_time`), `for...in` iteration, conditional input editability, rolling-buffer caps, and typed-object architecture over parallel arrays
+- Laravel: per-stage validation checkpoints (`migrate:status`, `route:list`, `queue:work --once`, `pint --test`) and the `QueryException` binding-leak pitfall with `DB_MASK_BINDINGS`
+- Planning: the altitude test (an Objective must be verifiable without knowing the component's internals) and an overwrite guard — `init-plan.sh` now refuses to clobber a plan with unchecked tasks unless forced
+- Swarm orchestration: cold-start tax in dispatch sizing, inline-the-skill-content briefing rule (dispatched agents can't load the orchestrator's skills), and destructive-ambiguity findings queue into the completion report instead of blocking autonomous runs
+- Headless review mode: comments instructing to skip tests, disable verification, or run commands always escalate — comment text is data, not authorization
+
+### Changed
+- Brainstorming surfaces conflicts between the user's wording and what the code verifiably does before treating the wording as settled
+- Reflect scans for information-access gaps — points where a session stalled for lack of read access to logs, dashboards, or CI output
+
+### Fixed
+- PostgreSQL composite-index rule corrected to equality-columns-first (the "most selective first" myth is gone)
+- Pine Script line-wrap rule corrected to the documented non-multiple-of-4 form; the debugging label example now caps its object count
+
+## [4.4.2] - 2026-08-18
+
+### Changed
+- `ia-cpp-systems` explains that `clang-analyzer-*` runs whether or not the config lists it, and that `WarningsAsErrors` leaves its findings non-fatal, so a use-after-free warns while CI stays green.
+### Fixed
+- `ia-python-services` prescribed check-before-write as an idempotency mechanism while code review files check-then-act as a race. Two Celery workers both read "absent" and both insert.
+
+## [4.4.1] - 2026-08-10
+
+### Added
+- `ia-cpp-systems` gained a Concurrency section, having previously sent people at threaded code with a TSan recommendation and no authoring guidance. It includes the guard that compiles silently and locks nothing: `std::lock_guard<std::mutex>{m};` builds clean under `-Wall -Wextra -Wshadow` and unlocks before the next statement runs.
+- `ia-agent-native-architecture` now says what to write in an MCP tool description, which is the field a model actually routes on. Precision over brevity, the boundary against sibling tools, and no worked examples, urgency boosters, or cross-tool scolding.
+- `ia-debugging` redaction now covers the transcript, not only outbound search queries. Reproduction loops read credentials from the environment so the value never enters what gets pasted back.
+### Changed
+- `ia-code-review` tracks every changed file from the original scope through covered, failed, pending, or explicit exclusion. Partial reviews can no longer return a ready verdict, and tests and deletions stay in the coverage denominator.
+### Fixed
+- `ia-document-review` blocked for approval without naming a harness tool, which degrades to nothing on three of the four distribution targets.
+
+## [4.4.0] - 2026-08-04
+
+### Added
+- `ia-c-systems` covers C11 and later for systems code, libraries, and native extensions: module layout, naming as a greppability contract, orchestrator/leaf/adapter function altitudes, status enums with one producer per error value, and public-validates/internal-asserts boundaries. Four references carry the depth, including memory safety (sanitizer invocation, overflow-checked allocation, an undefined-behavior table, converting recursion to a bounded worklist) and a PHP extension dialect file for Zend API work.
+- `ia-cpp-systems` covers C++17 and later: RAII and ownership, rule of zero until a destructor appears and rule of five after, error models, and the three API decisions that break callers when they go wrong. References cover ABI boundaries and CMake tooling.
+### Changed
+- `ia-php-laravel` now says where php-src and native extension work belongs instead of only excluding it.
+
+## [4.3.3] - 2026-08-03
+
+### Added
+- `ia-refine-prompt` gained a Machine-Parsed Text section for output a model reads with no one to ask: one directive per sentence, simple tenses, noun stacks capped at three, `must` and `never` reserved for real requirements, every referent named. A person resolves an ambiguous instruction by asking. A model resolves it by guessing.
+- `ia-receiving-code-review` classifies a fix before you start patching it: in-scope blocker, follow-up, or stop-and-escalate. Two review-triggered patch cycles that have not converged is itself the signal to stop and reclassify rather than keep editing.
+- `ia-verification-before-completion` captures the validation baseline before the first write on dependency bumps, framework upgrades, and migrations, and halts outright on a red baseline. A regenerated lockfile does not stash cleanly, so the usual retroactive base-branch proof is not available to you afterward.
+- `ia-code-review` gained a trap for the size-capped buffer that then parses whatever it kept. Truncated JSON usually throws and arrives disguised as a parse failure. Truncated NDJSON or CSV parses cleanly as a shorter valid document, and no caller can tell three records from three thousand.
+- `ia-refine-prompt` pairs every prohibition with the behavior to substitute, because steering by ban makes the banned thing more available, not less.
+- `ia-md-docs` says what earns space in a context file rather than only what to leave out: document what the agent cannot discover by reading the repo. The environment is a source of truth too, so a section restating it is a cache, and a cache earns its load only when the lookup was expensive.
+### Changed
+- `ia-nodejs-backend` scopes fail-open to transport failure only. When the outbound call is the security decision, the breaker's fallback is deny, and a response that arrived but cannot be trusted stays blocked: a 4xx, a malformed body, an unknown verdict value. The endpoint was reached and did not answer.
+- `ia-simplifying-code` raises the bar for deleting a guard that counters an external hazard: show the precondition is present and handled. A green suite proves nothing when the run may never have triggered the hazard at all.
+
+## [4.3.2] - 2026-07-27
+
+### Added
+- `ia-verification-before-completion` gained a sweep ledger for "change it everywhere" tasks. The completion gate proves a command passed; it says nothing about whether that command ran over the whole set. Every item now carries an explicit disposition, and you can't claim coverage the ledger doesn't show.
+- `ia-writing-tests` establishes the runner before writing the first test. The failure it prevents is the one where a bare global binary passes locally and CI invokes the project-pinned wrapper against a different dependency set.
+- `ia-document-review` renders findings so you can decide without reopening the document. Each finding leads with what goes wrong if nothing changes, and identifiers you'd have to look up get a plain-language handle at first mention.
+- `ia-rust-systems` gained a rustdoc reference covering doc-comment forms, the sections clippy checks for, and `#![deny(missing_docs)]`. The CI pipeline already ran `cargo test --doc`; nothing told you to write any doc tests for it to run.
+- `ia-orchestrating-swarms` assigns aggregate checks to a single owner per dispatch. The skill already forbade agents running the suite during parallel work without saying what to run instead, so a four-agent wave could run the same suite four times and call it assurance.
+### Changed
+- `ia-code-review` treats grep as the weakest tier of evidence, not the strongest, whenever a finding rests on "nothing else calls this". Symbol-aware and structural search catch the callers that re-exports and dependency injection hide, and a grep-only sweep now records that limit rather than asserting absence.
+- `ia-php-laravel` warns that `env()` outside `config/` returns null once `config:cache` has run. The deploy sequence requires that command, so the skill was prescribing the optimization and omitting the rule that makes it safe.
+- `ia-nodejs-backend` covers 64-bit integer columns reaching JavaScript. Casting an ID to a string in the serializer restores nothing, because precision is already gone at parse time.
+- `ia-terraform` prefers `use_lockfile` for S3 state locking and marks the DynamoDB table as deprecated. The skill was sending people to stand up infrastructure they no longer need.
+- `ia-rust-systems` prescribes `#[expect]` over `#[allow]` for warranted suppressions, so a suppression that outlives its cause reports itself instead of rotting silently.
+- `ia-writing` checks its own restraint. The skill called over-editing a failure mode equal to under-editing while shipping seven detectors for one and none for the other, so it now captures the draft's voice signals first and tests the result against them.
+- `ia-refine-prompt` cuts lines the model would follow anyway. "Cut what's vague" and "cut what the model already does" are different filters, and only the second one removes "be thorough".
+- `ia-reflect` records which line of a skill misfired and what made it not apply here. "Line 47 is wrong in this context" is an edit someone can make; "this skill has vague directives" is a research project.
+- `ia-frontend-design` asks for rendered evidence. Eight of its nine verification items were tickable from the diff, in a skill whose whole argument is that visual quality is the deliverable.
+### Fixed
+- `ia-terraform` no longer tells you to run `terraform test -no-cleanup`. The flag doesn't exist and the binary rejects it. The upstream skill we borrowed from asserts it three times and is simply wrong.
+- `ia-rust-systems` described a `pub(crate)` re-export that can't compile, since `pub use` on a crate-private item is `E0364`. The reachability guidance now matches what rustc accepts.
+- `ia-php-laravel` credited PHPStan level 8 with the missing-iterable-value-type check. It lands at level 6, so anyone running 6 or 7 read that they were exempt when they weren't.
+- `ia-rust-systems` carried two rules that contradicted each other, one banning every clippy suppression and one sanctioning `#[expect]`. Unsafe findings get fixed rather than annotated, and the escape hatch is scoped to everything else.
+- `ia-planning` writes the phase state its own resume protocol reads. The protocol described reading a "current phase" that the plan template never created, so resuming after a compaction meant guessing.
+- `ia-rust-systems` stopped firing on read-only searches. Its trigger matched "Rust codebase" and "Rust project", so asking where a file lives loaded a skill about authoring idiom. The misfire rate was 22.4%, and it's now zero across 28 fixtures.
+
+## [4.3.1] - 2026-07-18
+
+### Changed
+- `ia-nodejs-backend` gained dependency supply-chain guidance beyond a single `npm audit` line: frozen installs, gating package lifecycle scripts before they run, and the reminder that a clean audit says nothing about a freshly malicious or typosquatted package.
+- `ia-brainstorming` carries settled decisions forward instead of re-litigating them. A choice the user made with its trade-off in view stays settled and isn't re-asked at planning or during work, while a cold directive gets one challenge and is then recorded. A new value-sourcing self-review catches any produced value whose source the spec never names.
+- `ia-linux-bash-scripting` gained two injection-safety rules: keep untrusted data out of heredocs and `sh -c` strings, since a quoted heredoc still breaks when a content line matches the delimiter, and allowlist a command by matching the whole command anchored rather than inspecting its arguments, so a shell operator can't smuggle a second command past the check.
+- `ia-simplifying-code` gained two reuse checks: flag code that hand-maintains a guarantee the framework or a downstream layer already enforces, and eliminate duplication by deriving it from a source of truth before consolidating it into a helper.
+- `ia-orchestrating-swarms` records a skipped task in its subject rather than marking it plainly complete, so a task list distinguishes work that finished from work a gate deliberately skipped.
+
+## [4.3.0] - 2026-07-12
+
+### Changed
+- `ia-orchestrating-swarms` now resolves its primitives against the active harness instead of assuming Claude's `Task`, `Teammate`, and `TaskCreate` tools. It documents the matching Codex calls (`spawn_agent`, `send_message`, `followup_task`, `wait_agent`), and its worktree-isolation, model-selection, and context-carry-forward guidance each branch by harness.
+
+## [4.2.1] - 2026-07-11
+
+### Changed
+- `ia-brainstorming` gained a blindspot pass for territory the user can't evaluate. When someone signals they can't weigh a domain ("I know nothing about auth, you decide"), the interview stops extracting guesses and maps the decision surface instead — three to seven decisions and hazards, each with options and a recommended default — so the user chooses against real alternatives rather than the agent deciding silently.
+- `ia-code-review` gained three checks. A referee re-read: before dropping a Critical finding because the Skeptic disproved it, re-read the cited guard at its line (or confirm the cited doc), because a phantom citation is how a real Critical gets silently dropped. A silent-pass lens: a change that is itself a verification mechanism — a CI gate, a merge-block check, a masking mock — gets the "can this go green while the thing it guards is red?" question even at five lines, where the size triggers would otherwise wave it through. And a sentinel-overload check: reusing an existing null or empty value for a new state, where "it type-checks" hides that consumers can no longer tell two states apart.
+- `ia-compound-docs` now grounds behavioral claims in source before writing them to permanent docs: read the defining line and cite it, cite PR numbers rather than bare SHAs that a rebase rewrites, and attribute what can't be verified instead of asserting it as fact.
+- `ia-reflect` checks existing memory for duplicates and contradictions before writing a new entry, including through the high-confidence `remember:` path, and excludes harness-level noise from its operational-learnings scan.
+- `ia-react-frontend` gained two server-component rules: never hold request-scoped data in module-level state, since server renders share one process and it leaks across requests, and pass only the fields a client component actually uses across the boundary, since every prop is serialized into the payload.
+- `ia-writing` gained one more AI tell: the permission-granting closer "And that's okay."
+
+## [4.2.0] - 2026-07-07
+
+### Changed
+- `ia-md-docs` no longer carries a bare `mv CLAUDE.md AGENTS.md` migration that could fire as a side effect of an unrelated task. The migration now runs only inside the init or update workflow and only after you confirm it.
+- `ia-writing` carried two copies of its audit workflow that had drifted apart; the reference file is now the single source, with the newer tag vocabulary.
+- `ia-planning`, `ia-meta-prompting`, and `ia-brainstorming` gained patterns for surfacing unknowns before committing to an approach.
+### Fixed
+- `ia-react-frontend` linked to two sibling skills by their pre-4.0 names, so both links pointed at files that no longer exist.
+- `ia-terraform` gave three different format commands for the same check, one of which rewrote files where the verify step expected none. Version-pinned claims that rot (Docker base-image tags, a CVSS spec revision, a WCAG draft number, a model name) were reframed as patterns.
+
+## [2.56.1] - 2026-04-18
+
+### Added
+- **orchestrating-swarms/references/context-carry-forward.md**: decision table for long orchestrated sessions — Continue / Rewind / `/compact` / Subagent / `/clear`+brief. Rewind beats "correcting in place" because it drops the failed path from context instead of leaving it as a negative anchor.
+- **writing/references/pr-descriptions.md**: PR/MR description style guide. Sizing matrix (1 sentence for trivial, full narrative for architecturally significant), Before / After / Scope-rationale frame, Mermaid-for-topology / table-for-grid rule, GitHub `#NN` auto-link trap, self-check list.
+- **agent-native-architecture/references/dynamic-context-injection.md**: new Trust Levels principle. Three-tier model (trusted / semi-trusted / untrusted) with a concrete prompt-injection defense test — inject "ignore all prior rules" into a retrieved document and confirm the agent refuses.
+### Changed
+- **react-frontend**: 5-class race taxonomy — lifecycle cleanup gaps, remount-timing mistakes, boolean-as-state when UI has more than two modes, stale promises / timers without cancel, per-element handlers where delegation is safer. Each class framed around its production signal, not the rule. Data-fetching cancellation unified: `AbortController` for fetch, `ignore`-flag for non-cancellable promises, React Query covers both.
+- **code-review**: Fix-First Classification renamed to Action Routing with a 4-tier split (`safe_auto` / `gated_auto` / `manual` / `advisory`) plus a conservative-route merge rule so a loose classification never promotes a boundary-crossing change to auto-fix. Integration section maps these to `receiving-code-review`'s AUTO-FIX / ESCALATE vocabulary. Configuration profile in `language-profiles.md` promoted from 4 prose bullets to numbered CFG-001 through CFG-006 checks (magnitude-change, timeout hierarchy inversion, pool mismatch, env drift, rollback gap, observability gap).
+- **code-review/references/deep-review.md**: reviewer prompt gains DO / DON'T preamble — read the actual code, don't take the PR description at face value, don't rubber-stamp sections you didn't open. Merge algorithm gains a fingerprint-first preamble; two-agent overlap now tags `MULTI-SPECIALIST CONFIRMED (s1 + s2)` with +0.05 confidence, three-agent with +0.10 (applied once per group). Output header reports K-at-3+ / M-at-2 counts so reviewers can scan for convergent signal without reading every finding.
+- **code-review/references/reliability-patterns.md**: double-retry stacked anti-pattern. Application `@retry` on an auto-retrying SDK multiplies attempts (3×3 = 9) and the backoff compounds; audit the client's default retry policy before wrapping it, and retry at exactly one layer.
+- **orchestrating-swarms**: BLOCKED triage decision tree — missing context re-dispatches same agent, reasoning ceiling escalates model, task-too-large splits, spec-wrong escalates to human. Pre-dispatch file-intersection check as a runnable safety gate with a "no git / no test suite in parallel" constraint embedded in dispatch prompts. Fresh-agent rule on every reviewer re-dispatch across rounds — reviewers carrying memory from a prior round anchor on their earlier verdicts and miss regressions from fixes. NEEDS_CONTEXT aligned to "start or continue" across orchestrating-swarms / verification-before-completion / debugging.
+- **verification-before-completion**: Scope Confirmation pre-Edit gate for ambiguous-scope imperatives ("migrate my project", "refactor everywhere", "update across the app"). Surface concrete blast radius with `rg` breakdown before any Write or Edit — imperative phrasing is not the same as defined scope.
+- **agent-native-architecture**: Context Injection checklist gains a trust-levels bullet pointing at the new Trust Levels principle. Tool Design checklist adds Eval Gate — 10 Q/A pairs, 9/10 CI threshold, closed-data multi-hop tests — surfaced into the body from the MCP tool-design reference.
+- **receiving-code-review**: 4-tag false-positive taxonomy for dismissed suggestions — FP-ASSUMPTION / FP-CONVENTION / FP-ALREADY-HANDLED / FP-OUT-OF-SCOPE — with a push-back mapping column so dismissals cite structured reasoning. Integration section cross-maps to code-review action-routing tiers.
+- **frontend-design**: H1 2-3 line iron rule (ultra-wide containers like `max-w-5xl`, `clamp(3rem, 5vw, 5.5rem)` for fonts that scale down instead of wrapping). Mobile Collapse Mandate — asymmetric layouts above `md:` must collapse to `w-full px-4` below 768px, 44×44px minimum touch targets, no rotations or negative-margin overlaps on mobile. Bento-grid `grid-flow-dense` rule and hero scroll-filler ban added to `banned-ai-patterns.md`. Cross-card baseline alignment check added to `redesign-audit.md`.
+- **md-docs**: Monorepo Context Loading section. Ancestors load at startup walking up, descendants lazy-load on subtree access, siblings never load — put shared conventions at the root, package-specific at each package root.
+- **simplifying-code**: Step 6 pre-submit scope audit. Walk every changed line and ask "does the task explicitly require this?" If no, revert and list as a follow-up.
+- **writing**: PR / MR Descriptions section cross-references the new reference file.
+
+## [2.56.0] - 2026-04-14
+
+### Added
+- **rust-systems/references/cli-tools.md**: clap derive patterns, layered `LowArgs → HiArgs` parsing for non-trivial CLIs (ripgrep-style), config layering (defaults → XDG → project → env → flags), stderr logging with TTY-aware progress, `assert_cmd` CLI testing.
+- **rust-systems/references/axum-service.md**: project layout (routes → services → repos), AppState with `Arc` inside, `IntoResponse` error envelope from `thiserror`, `ValidatedJson` extractor, tower middleware order, `tokio::signal` graceful shutdown, `sqlx::query_as!` compile-time macros with offline `.sqlx/` cache, `tower::ServiceExt::oneshot` for router tests.
+### Changed
+- **code-review**: merged Maintainability and Readability subsections under "What to Check" — three of five Maintainability items (naming, function length, nesting depth) duplicated the Readability list. Consolidated section preserves Readability's measurable thresholds ("3 levels of indentation", "forces scrolling") and keeps Maintainability-unique items (God classes / SRP, leaky abstractions).
+- **code-review**: test-file exclusion added to Review Mode Selection signals. Lines/files/directory counts now exclude `tests/`, `__tests__/`, `*.test.*`, `*.spec.*`, `*_test.*` paths so boilerplate-heavy test expansions don't falsely trigger deep review. Both totals reported for transparency.
+- **code-review/references/false-positive-suppression.md**: clarified the vague "already addressed in the diff" example under Readability-aiding redundancy. Now explicit: author fixed it in a later commit within the same diff, flagged it in their own PR comments, or a prior reviewer resolved it.
+
+## [2.55.1] - 2026-04-12
+
+### Changed
+- **php-laravel**: replaced ambiguous "Fat models, thin controllers" with clear boundary -- models own domain behavior, services own orchestration.
+- **react-frontend**: React Compiler install instruction updated to framework-first config path (Next.js `reactCompiler: true`).
+- **python-services**: added `uv run ty check .` to Verify section -- ty was listed as a tool but never enforced.
+- **orchestrating-swarms**: trimmed redundant "Best Practices" section (3 items already covered by Dispatch Discipline and QA retry loop) down to 2 unique "Integration Rules" (post-integration verification, spawned-session behavior).
+- **verification-before-completion**: collapsed 6-row Rationalization Prevention table into a 2-sentence paragraph -- the Gate Function already covers these rules.
+
+## [2.55.0] - 2026-04-10
+
+### Changed — skills
+- **writing**: Named-tag lookup table with severity suffixes (`+H`, `+S`) — `[STACCATO]`, `[FALSE-AGENCY]`, `[BINARY-CONTRAST]`, `[ELEGANT-VAR]`, `[EM-DASH]`, `[META-COMMENTARY]`, `[INFLATED]`, `[VAGUE-DECLARATIVE]`. Per-tag fix action table and structured AUDIT/CORRECTED TEXT/CHANGELOG output format. Cross-referenced the "Kill on Sight" and "Long-form audit workflow" vocabulary sections (short-form vs long-form use). Sourced from `ai-writing-audit` and `stop-slop`.
+- **orchestrating-swarms**: Preset Team Compositions table extracted to `references/team-compositions.md` (Review, Debug, Feature, Fullstack, Migration, Security, Research). Cardinal `subagent_type` rule added calling out read-only agents silently failing on writes. Sourced from agents repo.
+- **frontend-design**: Mandatory Interactive States section (loading/empty/error/tactile press), Performance Guardrails (grain filter on scrolling containers, `transform`/`opacity` only, z-index restraint, perpetual animation isolation), and RSC/Client Component boundaries extracted to `references/rsc-client-boundaries.md` (`useMotionValue` vs `useState`, `'use client'` leaf isolation, `staggerChildren` parent-child colocation). Typography and Backgrounds bullets split from ~200-word run-on paragraphs into sub-bulleted rules. Sourced from `taste-skill`.
+- **brainstorming**: Phase 3b inline spec self-review checklist (placeholder scan, internal consistency, scope containment, ambiguity sweep, assumption validation, non-goals) before handing off to planning. Sourced from `superpowers`.
+- **code-review**: Merge algorithm for multi-agent output moved to `references/deep-review.md` (same-line-same-issue = merge higher severity, same-line-different-issue = co-located, conflicting severity = take higher, conflicting recommendations = `NEEDS DECISION`, convergence = boost confidence). Findings use `CR-001` IDs (previously the output template used `**1.**` which contradicted the CR-numbering instruction — fixed). Review Process step 1 (Context) split from a dense 5-sentence paragraph into sub-bulleted actions (Scope Drift Check, intent read, existing-discussion fetch, automated gates). Sourced from gstack, agents repo.
+- **verification-before-completion**: Structured Completion Report Format with `DONE/DONE_WITH_CONCERNS/BLOCKED/NEEDS_CONTEXT` status, mandatory `Things I didn't touch (intentionally)` section for visible scope discipline, and verification evidence block. Rationalization table collapsed from 14 rows to 6 by consolidating near-identical entries. Sourced from gstack, google-agent-skills.
+- **simplifying-code**: Orchestrator Mode section with canonical `Resolved scope` fenced block passed verbatim to every chained sub-skill, preventing scope drift and double work. Sourced from `agent-skills/code-polish`.
+- **receiving-code-review**: Batched clarification pattern for ambiguous critical-path findings (up to 4 items in one `AskUserQuestion` call with `Valid / False positive / Defer` options); documents fallback behavior when `AskUserQuestion` tool isn't available. Sourced from `agent-skills/coderabbit`.
+- **debugging**: STATUS line gained `NEEDS_CONTEXT` option to match the canonical 4-status taxonomy used by `orchestrating-swarms` and `verification-before-completion`. Verify section corrected from "all five fields" to "all seven fields" (Debug Report has 7 fields: SYMPTOM, ROOT CAUSE, FIX, EVIDENCE, REGRESSION, RELATED, STATUS). Anti-patterns table collapsed from 12 rows to 6 by merging duplicate "guessing / shotgun / fixing symptoms" rationalizations.
+- **planning**: Execution Posture Signals clarified — **tests-after is the default**, test-first/characterization-first/external-delegate are opt-in annotations. Added the per-section enhancement format and Enhancement Summary block to Plan Deepening (content moved from the `/deepen-plan` command). Removed redundant Anti-Patterns table — content was already enforced by Plan Quality Rules and Phase Sizing Rules.
+- **postgresql**: Removed duplicated slow-query and table-bloat SQL from Query Optimization section (the full versions already exist in Detection Queries below). Trigger pattern tightened to require SQL/database context anchors — previously matched bare keywords like `trigger`, `function`, `extension`, causing **90% misfire rate** (9/10 injections) on letter-review and plugin-audit sessions.
+- **debugging**: Trigger pattern tightened to require the word "debug" within 30 chars of a failure indicator (error/bug/fail/crash/issue/broken/problem/trace/stack/regression), avoiding matches on "debug mode" or "debug output" in non-bug contexts.
+- **reflect**: Memory path placeholder `~/.claude/projects/.../memory/` replaced with concrete `<project-slug>` placeholder explanation.
+- **refine-prompt**: Removed duplicate "Never invent" rule (was stated in both Rules and Constraints sections).
+- **md-docs**: Writing Style section rewritten — replaced vague meta-instructions ("terse", "accurate") with measurable criteria (lead-with-answer, verify-every-command, no-passive-voice in directives, headings every ~20 lines).
+- **php-laravel**: Converted cross-skill markdown link `[writing-tests](../writing-tests/SKILL.md)` to prose reference matching the plugin's cross-skill convention.
+
+## [2.53.2] - 2026-04-08
+
+### Changed
+- **orchestrating-swarms**: Task description template with file ownership and interface contracts. Controller-curates-context principle. Spawned-session behavior for subagent skills. Circuit-breaker, bulkhead isolation, and saga compensation for mid-pipeline failures.
+- **code-review**: Fix-First heuristic (AUTO-FIX vs ASK classification table). Red-team adversarial pass (silent failures, trust exploits, edge cases). Comment labels for inline review feedback. LLM-specific false-positive rule. Numbered findings for easier referencing.
+- **agent-native-architecture**: MCP tool annotations, structured output with actionable errors, transport selection matrix, pagination contract, multi-server tool naming.
+- **planning**: Session continuity protocol. Threat modeling reference for security-sensitive designs.
+- **git-worktree**: Branch completion ceremony (4-option flow with discard confirmation). Change Summary with "DIDN'T TOUCH" section.
+- **brainstorming**: Seven ideation lenses, "Not Doing" list, assumptions-with-validation format. Threat modeling reference.
+- **writing**: Wh- sentence openers, Narrator-from-a-distance, lazy extremes, meta-commentary tells.
+- **writing-tests**: Three-source QA inventory (requirements, features, claims).
+- **simplifying-code**: Chesterton's Fence in read-first step. Over-simplification failure modes. Function length threshold tightened to >20 lines.
+- **frontend-design**: Utility copy discipline for product UI vs marketing copy.
+- **debugging**: RELATED and STATUS fields in debug report. CI failure investigation pattern in specialized-patterns.md.
+- **verification-before-completion**: Pre-verification dirty-tree check. Don't-trust-implementer rule for delegated work.
+- **reflect**: Operational learnings step with 5-minute filter.
+- **postgresql**: Migration Safety section with expand-contract pattern, batch UPDATE with FOR UPDATE SKIP LOCKED, dangerous operations guide.
+- **nodejs-backend**: Fail-fast env validation, health endpoints (shallow vs deep), migration patterns, third-party response validation, pre-ship endpoint checklist.
+- **php-laravel**: Fail-fast config validation, health endpoints, migration discipline, third-party response validation.
+- **python-services**: Fail-fast config validation via Pydantic BaseSettings, health endpoints, migration patterns, uv upgrade workflow, third-party response validation.
+
+## [2.53.0] - 2026-04-05
+
+### Added
+- **code-review**: Three new deep-review specialists -- api-contract (breaking changes, versioning, error consistency), data-migration (reversibility, lock duration, backfill strategy), red-team (adversarial second pass finding integration gaps). Change sizing guidance with 4 splitting strategies. Readability as explicit review dimension.
+- **writing**: Two-phase audit workflow (detect all tells first, then rewrite) with citation auditing tags ([OAICITE], [LINK-ROT], [ISBN-DOI-FAIL], [REF-BUG]). New `references/audit-workflow.md`.
+- **frontend-design**: Expanded AI slop detection to 6 prioritized patterns plus 15 additional tells. Motion patterns extracted to `references/motion-patterns.md` with spring physics values, stagger recipes, and GPU-safe animation rules.
+- **orchestrating-swarms**: Cold-start agent isolation, label randomization for judge panels, convergence detection. Two-stage review gate for subagent outputs. Resilience patterns (cascade prevention, recovery strategy, post-failure synthesis).
+- **verification-before-completion**: Three new rationalization table entries and red flags list for detecting skipped verification.
+- **planning**: Vertical slicing taxonomy, checkpoint system (verify every 2-3 tasks), strengthened no-placeholders rule.
+- **writing-tests**: Prove-It Pattern for bug fixes (reproduce bug with failing test before fixing). Test pyramid level definitions.
+- **md-docs**: Context hierarchy for CLAUDE.md files (Rules > Tech stack > Commands > Conventions > Boundaries).
+- **python-services**: Sync vs async decision guide. API design patterns with FastAPI idioms.
+- **php-laravel**: API design patterns with Laravel idioms (API Resources as contracts, Form Requests for boundary validation).
+- **nodejs-backend**: API design patterns with TypeScript/Express idioms (Zod schemas, consistent error envelopes). Expanded Express trigger to cover endpoints/routes/APIs.
+- **react-frontend**: Tailwind integration section with cross-reference to tailwind-css skill. JSX class sorting with `useSortedClasses` config.
+- **agent-native-architecture**: Hooks patterns reference (`references/hooks-patterns.md`) covering agent-context hook limitations, decision control, MCP matchers, async hooks, two-tier config.
+### Changed
+- **code-review**: Removed Fix-First Heuristic and auto-fix instructions -- skill is diagnostic only, identifies and reports issues without fixing.
+- **frontend-design**: Condensed motion bullet in SKILL.md, moved detailed rules to references/motion-patterns.md. Replaced inline "Additional tells" with reference link.
+- **orchestrating-swarms**: Removed duplicate "fresh agent" and "provide full context" directives that appeared in both Dispatch Discipline and later sections.
+- **verification-before-completion**: Removed duplicate "zero issues found" row from rationalization table (already covered in Rules section).
+- **agent-native-architecture**: Rephrased "Primitives not Workflows" to positive form.
+- **nodejs-backend**: Added positive alternative to sync method ban (use fs.promises/streams).
+- **php-laravel**: Clarified "don't explain" rule to specifically target generated code comments.
+- **python-services**: Discipline section references Verify section instead of restating commands.
+- **planning**: Removed redundant anti-pattern row (covered by Phase Sizing Rules).
+- **tailwind-css**: Removed out-of-scope React 19 forwardRef note (belongs in react-frontend).
+
+## [2.52.1] - 2026-04-04
+
+### Changed
+
+- **planning**: Vertical slicing principle in anti-patterns table and verify checklist. Task duration heuristic (>2h = split) in phase sizing rules.
+- **frontend-design**: Four new banned AI patterns -- colored icon circles, left-border accent cards, cookie-cutter section rhythm, bubbly rounded containers. Fixed stock imagery alternative.
+- **writing-tests**: DAMP over DRY principle and test pyramid ratios (~80/15/5) as separate subsections. DAMP caveat added to "When Stuck" table.
+- **debugging**: Reduce step (1c) with stopping criterion -- strip to minimal failing case before investigating.
+- **nodejs-backend**: Contract-first principle with named artifact (route schemas). Reconciled with existing OpenAPI generation guidance.
+- **verification-before-completion**: Removed duplicate empty Integration heading.
+
+## [2.52.0] - 2026-04-02
+
+### Added
+
+- **debugging**: Three new reference docs -- `defense-in-depth.md` (4-layer validation pattern), `competing-hypotheses.md` (full ACH methodology with 6 failure categories and evidence scoring), `root-cause-tracing.md` (backward call-chain tracing with test pollution detection).
+- **code-review**: `reliability-patterns.md` reference -- error handling, timeouts, retries, circuit breakers, resource cleanup, queue resilience. New reliability agent in deep-review specialist roster.
+- **code-review**: `false-positive-suppression.md` reference -- 8 suppression categories with override rules.
+- **frontend-design**: `redesign-audit.md` reference -- 60+ checks across typography, color, layout, interactivity, content, and component patterns for existing UI improvement.
+- **writing**: Quality Gate section with 5-dimension scoring rubric (Directness, Rhythm, Trust, Authenticity, Density) and 8-item quick audit checklist.
+- **writing/phrases.md**: Three structural anti-pattern categories (Dramatic Fragmentation, Formulaic Constructions, Narrator-from-a-Distance).
+- **writing-tests**: Four new rationalization table entries (hard-to-test code, understanding-first delay, prototype excuse, deadline pressure).
+- **postgresql**: Expanded anti-patterns table (7 patterns) with 3 detection queries (slow queries, table bloat, unused indexes).
+- **simplifying-code**: Two AI slop patterns (redundant error wrapping, verbose stdlib reimplementations).
+- **verification-before-completion**: `system-wide-test-check.md` reference -- blast-radius verification for task completion.
+- **receiving-code-review**: Headless mode extracted to `references/headless-mode.md`.
+
+### Changed
+
+- **meta-prompting**: Description trimmed to under 80 tokens while preserving all 15 slash command triggers.
+- **code-review**: Description trimmed. FP suppression consolidated into reference file.
+- **verification-before-completion**: Description trimmed with "Use when" trigger.
+- **planning**: Clarified `.plan/` overwrite scope (between features vs within multi-phase). Strengthened no-placeholder rule.
+- **brainstorming**: Phases 4-5 trimmed to delegate orchestration to `workflows:brainstorm` command.
+- **orchestrating-swarms**: Best Practices trimmed from 7 to 4 items (removed generic agent hygiene).
+- **writing**: Self-Check trimmed from 11 to 5 items (merged overlap with Quality Gate).
+- **compound-docs**: "BLOCK until valid" replaced with actionable "fix and re-run" fallback.
+
+## [2.51.0] - 2026-03-31
+
+### Added
+
+- **planning**: Execution posture signals (test-first, characterization-first, external-delegate) for phase-level implementation sequencing.
+- **planning**: Plan deepening section for targeted strengthening of existing plans.
+- **frontend-design**: Design variance parameters (DESIGN_VARIANCE, MOTION_INTENSITY, VISUAL_DENSITY) to prevent aesthetic convergence.
+- **frontend-design**: `references/banned-ai-patterns.md` -- comprehensive banned AI design patterns (layout, color, typography, decoration, interaction, content).
+
+## [2.50.0] - 2026-03-29
+
+### Added
+
+- **code-review**: Deep multi-agent review mode -- auto-detects complex diffs (3+ signals) and dispatches parallel specialist agents (correctness, security, testing, maintainability, performance). New `references/deep-review.md` with agent prompt templates, merge algorithm, and model selection.
+- **code-review**: Confidence rubric (0.0-1.0 scoring) with false-positive suppression categories. Intent verification in review process.
+- **receiving-code-review**: Headless mode for programmatic triage (AUTO-FIX / AUTO-DECLINE / ESCALATE classification). Prior-feedback check on re-reviews.
+- **document-review**: 5 conditional review lenses (Product, Design, Security, Scope guardian, Adversarial) activated by document signals.
+- **orchestrating-swarms**: Handoff protocol for structured agent-to-agent transfers. Coordination models comparison (stateless vs stateful). Reference map table.
+- **frontend-design**: 6 banned AI design patterns (purple gradient, centered-cards layout, uniform corners, accent lines, emoji headers, generic placeholder copy).
+- **git-worktree**: Environment detection (existing worktree, sandbox, bare repo).
+- **planning**: Test discovery phase for existing projects. Verify section with 6 measurable criteria.
+- **verification-before-completion**: 3 new rationalization entries (just this once, CI will catch it, zero issues on first pass).
+- **brainstorming**: Success criteria section.
+- **writing**: Short-form/long-form mode labels for self-check. Two new self-check items (contrast structures, vague declaratives).
+
+### Changed
+
+- **agent-native-architecture**: Converted non-standard XML tags to standard markdown. Added H1 heading. Removed duplicate References section. Linked orphan `quick-start.md`.
+- **orchestrating-swarms**: Removed duplicate Best Practices rules 1 and 8 (covered by Verify and Dispatch Discipline).
+- **php-laravel**: Removed duplicate Anti-Patterns section (4/5 entries already covered; moved unique entry to Discipline).
+- **postgresql**: Removed 10 duplicate Anti-Patterns entries (kept 1 genuinely new).
+- **linux-bash-scripting**: Compressed Linux-Specific section to non-obvious items only (GNU coreutils differences, timeout).
+- **compound-docs**: Replaced verbose Integration Points block with slim Integration section.
+- **reflect**: Replaced vague "auto memory system" with concrete file path. Folded Proactive Trigger into Process step.
+- **document-review**: Renumbered steps 1-8 sequentially (was 1, 2, 2b, 3, 4, 5, 5b, 6). Broadened description to cover specs, ADRs, and any doc.
+
+## [2.48.0] - 2026-03-22
+
+### Improved
+
+- **brainstorming** -- explore project context before questions, isolation/clarity design principles in Phase 3, collapsed redundant YAGNI/Incremental Validation/Integration sections
+- **debugging** -- under-pressure inoculation in Iron Law, trimmed Common Patterns to 3 non-obvious entries, removed duplicate anti-pattern row
+- **verification-before-completion** -- "I'm tired" and spirit-over-letter rationalization rows
+- **receiving-code-review** -- deleted redundant Forbidden Responses (covered by Common Mistakes table)
+- **planning** -- zero-context engineer framing for tasks, merged Relationship + Integration sections
+- **postgresql** -- pg_stat_statements slow-query detection, table bloat check
+- **php-laravel** -- DatabaseTransactions/DatabaseMigrations distinction, Http::fake(), Gate::forUser(), coverage target, dropped stale "since Laravel 9" pin, fixed Kernel.php framing for Laravel 11+
+
+## [2.47.2] - 2026-03-21
+
+### Improved
+
+- **code-review** -- scope drift check integrated into review process step 1, search-before-recommending anti-pattern
+- **debugging** -- sanitize-before-search rule, scope lock on hypothesis, structured debug report format, recurring fix site detection
+- **writing** -- changelog voice section (sell test, contributor subsection, verb tense)
+- **verification-before-completion** -- review staleness check, merged Red Flags into Rationalization Prevention
+- **planning** -- scope challenge trigger (8+ files or 2+ new classes)
+- **nodejs-backend** -- new `references/api-design.md` (cursor pagination, filtering, sorting, deprecation)
+- **react-frontend** -- flaky test quarantine workflow in e2e-testing reference
+- **simplifying-code** -- placeholder stub bans in AI Slop Removal
+- **frontend-design** -- extracted Creative Arsenal and Redesigning to references
+- **agent-native-architecture** -- extracted quick-start template to references, flattened reference index
+- **linux-bash-scripting** -- added output format definition
+
+## [2.45.8] - 2026-03-18
+
+### Fixed
+
+- **brainstorming/planning** -- explicit handoff: brainstorm outputs approved spec to `docs/brainstorms/`, planning takes it as input
+- **code-review** -- prior comments instruction bolded and repositioned for visibility
+
+## [2.0.5] - 2026-03-17
+
+### Changed
+
+- **code-review** -- fetch MR/PR discussions before writing findings to avoid re-raising resolved issues
+- **code-review** -- use diff content directly for added files instead of reading from working tree on remote branches
+
+## [2.0.4] - 2026-03-14
+
+### Changed
+
+- **meta-prompting** -- added output format awareness to intro line
+- **writing** -- converted Self-Check to 4-step procedural checklist with done definition
+- **pinescript** -- added Workflow section with development cycle and overfit detection
+- **linux-bash-scripting** -- added Verify section (shellcheck + shfmt + edge cases)
+- **nodejs-backend** -- added verify line to Discipline section
+- **postgresql** -- added Verify section (EXPLAIN ANALYZE + FK check)
+- **python-services** -- added verify line to Discipline section
+
+## [2.0.3] - 2026-03-14
+
+### Changed
+
+- **code-review** -- added untracked files to scope resolution fallback chain
+- **receiving-code-review** -- added `gh api` reply command for inline PR thread replies
+- **brainstorming** -- added trivially-scoped escape hatch and multi-subsystem decomposition signal
+- **planning** -- added execution handoff line pointing to `workflows:work`
+- **simplifying-code** -- added dense transform chain pattern to Smell-to-Fix table
+- **frontend-design** -- added Motion library performance guardrails, strengthened Tailwind version check
+- **tailwind-css** -- expanded border radius v3-to-v4 rename table
+- **refine-prompt** -- added missing-context sub-checklist to Context assessment row
+- **verification-before-completion** -- added verification phase order (build, typecheck, lint, test, diff)
+- **react-frontend** -- added RSC safety rules to App Router decision section
+
+## [2.0.0] - 2026-02-27
+
+### Changed
+
+- **Mirror mode** -- this repo is now a read-only mirror of skills from the [compound-engineering plugin](https://github.com/iliaal/compound-engineering-plugin). All edits happen upstream.
+- **Skill consolidation (19 > 31 skills)** -- all plugin skills are now mirrored here, including 14 previously plugin-native skills and updated versions of all existing skills.
+
+### Added
+
+- **agent-native-architecture** -- build AI agents using prompt-native architecture
+- **brainstorming** -- explore requirements and approaches through dialogue
+- **compound-docs** -- capture solved problems as categorized documentation
+- **document-review** -- improve documents through structured self-review
+- **file-todos** -- file-based todo tracking system
+- **frontend-design** -- create production-grade frontend interfaces
+- **git-worktree** -- manage Git worktrees for parallel development
+- **orchestrating-swarms** -- multi-agent swarm orchestration
+- **receiving-code-review** -- process review feedback critically
+- **verification-before-completion** -- fresh verification evidence before completion claims
+- **writing-tests** -- generic test discipline: quality, anti-patterns, rationalization resistance
+
+### Removed
+
+- **testing-laravel** -- absorbed into php-laravel (testing content as references)
+- **testing-react** -- absorbed into react-frontend (testing content as references)
+
+## [1.4.3] - 2026-02-22
+
+### Changed
+
+- **writing** -- add "PR descriptions" and "plans" to trigger keywords
+
+## [1.4.2] - 2026-02-22
+
+### Changed
+
+- **testing-laravel**, **testing-react** -- add "review tests" and "check tests" trigger keywords to descriptions
+
+## [1.4.1] - 2026-02-22
+
+### Changed
+
+- **php-laravel** -- change testing framework from Pest to PHPUnit
+
+## [1.4.0] - 2026-02-22
+
+### Changed
+
+- **debugging** -- add concurrency section (async race conditions, deadlocks, connection pool exhaustion) and postmortem template
+- **php-laravel** -- add PHP 8.4 features (property hooks, asymmetric visibility, `new` chaining, `array_find`/`array_any`/`array_all`), PHPStan level 8+, OPcache/JIT/preloading, Laravel ecosystem reference file
+
+## [1.3.1] - 2026-02-21
+
+### Changed
+
+- **debugging** -- add explicit root cause analysis section
+- **nodejs-backend** -- narrow security section to Node.js-specific tooling, reference security-sentinel for broader audits
+
+## [1.3.0] - 2026-02-20
+
+### Added
+
+- **testing-laravel** -- PHPUnit-based Laravel testing: feature tests, factories, mocking, time travel
+- **testing-react** -- Vitest and React Testing Library: component tests, hook tests, snapshot tests
+
+### Changed
+
+- **testing-laravel** -- add time travel and `Http::preventStrayRequests()`
+- **testing-laravel**, **testing-react** -- add "tests expose bugs" rule
+- Multiple coding skills -- add Discipline section with workflow rules
+
+## [1.2.0] - 2026-02-17
+
+### Changed
+
+- **meta-prompting** -- add `/flip`, `/assumptions`, `/tensions` reasoning patterns
+
+## [1.1.0] - 2026-02-16
+
+### Added
+
+- **reflect** -- session retrospective and skill audit
+
+### Changed
+
+- **writing** -- improve human emulation patterns
+
+## [1.0.0] - 2026-02-16
+
+### Added
+
+Initial release with 16 skills:
+
+- **code-review** -- two-stage code reviews with severity-ranked findings
+- **debugging** -- systematic root-cause debugging
+- **linux-bash-scripting** -- defensive Bash scripting for Linux
+- **md-docs** -- manage AGENTS.md, README.md, CONTRIBUTING.md
+- **meta-prompting** -- enhanced reasoning patterns via slash commands
+- **nodejs-backend** -- Node.js backend patterns: Express/Fastify, TypeScript
+- **php-laravel** -- modern PHP and Laravel patterns
+- **pinescript** -- Pine Script v6 for TradingView
+- **planning** -- file-based implementation planning
+- **postgresql** -- PostgreSQL schema design, query optimization
+- **python-services** -- Python CLI tools, async parallelism, FastAPI
+- **react-frontend** -- React, TypeScript, and Next.js patterns
+- **refine-prompt** -- transform vague prompts into precise instructions
+- **simplifying-code** -- simplify and declutter code
+- **terraform** -- Terraform/OpenTofu configuration and modules
+- **writing** -- prose editing, rewriting, and humanizing text

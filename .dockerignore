@@ -1,0 +1,91 @@
+# Dependencies and build outputs
+node_modules
+.next
+out
+build
+dist
+tsconfig.tsbuildinfo
+
+# Version control
+.git
+.gitignore
+.github
+
+# Environment variables (injected at runtime via Dokploy)
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# OpenCode & AI assistant files
+.opencode
+
+# Test artifacts and screenshots
+test-artifacts*
+test-artifacts-*
+coverage
+tests
+__tests__
+*.test.*
+*.spec.*
+
+# Backups
+backup*
+backups*
+*.bak
+*.backup
+
+# SQLite locks and journals (preserve database file)
+*.db-journal
+*.db-wal
+*.db-shm
+prisma/*.db-journal
+prisma/*.db-wal
+prisma/*.db-shm
+!prisma/portfolio.db
+
+# Ensure statement CSV is included
+!trading-account-statement_2026-06-10_2026-11-03_en_129c4e.csv
+
+# Python caches and virtual environments
+__pycache__
+*.py[cod]
+*$py.class
+.pytest_cache
+.venv
+venv
+
+# Windows-specific files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS-specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor directories and temporary files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# VPS deploy scripts and non-runtime documents
+deploy/
+*.pdf
+README.md

@@ -1,0 +1,89 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AccountSnapshot {
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  date             DateTime           @unique
+  totalValue       Float              // Valor total de la cuenta
+  totalInvested    Float              // Total neto depositado/invertido
+  realProfit       Float              // Beneficio real (€) = totalValue - totalInvested
+  realProfitPct    Float              // Beneficio real en %
+  unrealizedProfit Float              // P/L latente de posiciones abiertas
+  realizedProfit   Float              @default(0) // P/L cerrado
+  totalDividends   Float              @default(0)
+  freeCash         Float              // Efectivo disponible
+  positionsCount   Int                @default(0)
+  positions        PositionSnapshot[]
+
+  @@index([date])
+}
+
+model PositionSnapshot {
+  id           Int             @id @default(autoincrement())
+  snapshotId   Int
+  snapshot     AccountSnapshot @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+  ticker       String
+  name         String?
+  quantity     Float
+  averagePrice Float
+  currentPrice Float
+  ppl          Float           // Profit/Loss latente
+  totalCost    Float
+  currentValue Float
+  weight       Float           // % del portfolio
+
+  @@index([snapshotId])
+  @@index([ticker])
+}
+
+model RevolutPosition {
+  id           Int      @id @default(autoincrement())
+  ticker       String   @unique
+  name         String?
+  quantity     Float
+  averagePrice Float    // Precio medio de compra en EUR
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([ticker])
+}
+
+model DividendRecord {
+  id           String   @id
+  ticker       String
+  paidOn       DateTime
+  amount       Float
+  grossAmount  Float?
+  quantity     Float?
+  currency     String   @default("EUR")
+  createdAt    DateTime @default(now())
+
+  @@index([paidOn])
+  @@index([ticker])
+}
+
+model CashTransaction {
+  id        String   @id
+  dateTime  DateTime
+  type      String
+  amount    Float
+  currency  String   @default("EUR")
+  createdAt DateTime @default(now())
+
+  @@index([dateTime])
+  @@index([type])
+}
+
+model AppSetting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
