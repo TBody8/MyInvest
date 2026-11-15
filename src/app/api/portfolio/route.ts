@@ -12,7 +12,7 @@ import {
   fetchSp500PeriodReturn,
 } from "@/lib/calculations";
 import { buildRealPortfolioHistory, clearCandleCache } from "@/lib/marketHistory";
-import { getRevolutPositions, getRevolutChartPoints } from "@/lib/revolut";
+import { getRevolutPositions, getRevolutChartPoints, getRevolutTrades } from "@/lib/revolut";
 import { clearQuoteCache, getLiveEurUsdRate } from "@/lib/quotes";
 import {
   calculatePreciseTWR,
@@ -241,7 +241,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     let revolutChartData: Record<Timeframe, ChartPoint[]> = {} as any;
 
     if (broker !== "t212") {
-      revolutPositions = await getRevolutPositions();
+      const [positions, revolutHistory] = await Promise.all([getRevolutPositions(), getRevolutTrades()]);
+      revolutPositions = positions;
       revolutTotalValue = revolutPositions.reduce((acc, p) => acc + (p.currentValue || 0), 0);
       revolutInvested = revolutPositions.reduce((acc, p) => acc + (p.totalCost || 0), 0);
       revolutProfit = revolutTotalValue - revolutInvested;
@@ -249,7 +250,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
       const revolutChartResults = await Promise.all(
         timeframes.map(async (tf) => {
-          const points = await getRevolutChartPoints(tf, revolutTotalValue, revolutInvested, revolutPositions);
+          const points = await getRevolutChartPoints(tf, revolutTotalValue, revolutInvested, revolutPositions,
+            revolutHistory.trades, revolutHistory.undatedBaselineEur);
           return [tf, points] as [Timeframe, ChartPoint[]];
         })
       );

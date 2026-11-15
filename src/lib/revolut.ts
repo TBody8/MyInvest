@@ -2,71 +2,37 @@ import prisma from "@/lib/db";
 import { fetchMultipleQuotes, fetchNativeQuote, getEurConversionRate } from "@/lib/quotes";
 import { T212Position, Timeframe, ChartPoint } from "@/types/trading212";
 import { getRealMarketCandles, getRollingTradingDays, CandleItem } from "@/lib/marketHistory";
-import { addPurchase, readLedger, PurchaseInput, PurchaseValidationError, validatePurchase } from "./revolutAccounting";
+import { addPurchase, datedTradesFromLedger, DatedRevolutTrade, readLedger, PurchaseInput, PurchaseValidationError, validatePurchase } from "./revolutAccounting";
 import { formatEur } from "@/lib/utils";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { randomUUID } from "crypto";
-import fs from "fs";
-import path from "path";
 
-interface RevolutTradeItem {
-  timestamp: number;
-  date: string;
-  ticker: string;
-  totalEur: number;
-}
-
-let cachedRevolutTrades: RevolutTradeItem[] | null = null;
-
-function getRevolutTrades(): RevolutTradeItem[] {
-  if (cachedRevolutTrades) return cachedRevolutTrades;
-  const trades: RevolutTradeItem[] = [];
-
-  try {
-    const csvPath = path.resolve(process.cwd(), "trading-account-statement_2026-06-10_2026-11-03_en_129c4e.csv");
-    if (fs.existsSync(csvPath)) {
-      const text = fs.readFileSync(csvPath, "utf8");
-      const lines = text.trim().split(/\r?\n/);
-      for (let i = 1; i < lines.length; i++) {
-        const parts = lines[i].split(",");
-        const type = parts[2]?.toUpperCase() || "";
-        if (type.includes("BUY")) {
-          const rawDate = parts[0];
-          const ticker = parts[1]?.trim().toUpperCase() || "";
-          const totalStr = parts[5]?.replace(/[A-Za-z\s€$£]/g, "") || "0";
-          const fx = parseFloat(parts[7]) || 1;
-          const totalEur = parseFloat(totalStr) / fx;
-          const parsed = new Date(rawDate);
-          if (Number.isFinite(parsed.getTime())) {
-            trades.push({
-              timestamp: parsed.getTime(),
-              date: rawDate.slice(0, 10),
-              ticker,
-              totalEur: Number(totalEur.toFixed(2)),
-            });
-          }
-        }
-      }
-    }
-  } catch {
-    // Si no está disponible el archivo CSV se usará la información de la base de datos
+export async function getRevolutTrades(): Promise<{ trades: DatedRevolutTrade[]; undatedBaselineEur: number }> {
+  const positions = await prisma.revolutPosition.findMany({ select: { ticker: true, quantity: true, averagePrice: true, notes: true } });
+  const trades: DatedRevolutTrade[] = [];
+  let undatedBaselineEur = 0;
+  for (const position of positions) {
+    const ledger = readLedger(position);
+    // Imported statements include their own complete history; legacy positions
+    // without dated trades retain their initial, undated EUR cost basis.
+    if (!ledger.importedTrades?.length) undatedBaselineEur += ledger.baseline.costEur;
+    trades.push(...datedTradesFromLedger(position.ticker, ledger));
   }
-
   trades.sort((a, b) => a.timestamp - b.timestamp);
-  cachedRevolutTrades = trades;
-  return trades;
+  return { trades, undatedBaselineEur };
 }
 
-function getRevolutInvestedUpTo(trades: RevolutTradeItem[], cutoffMs: number, totalCost: number): number {
-  if (trades.length === 0) return totalCost;
-  const lastTradeTime = trades[trades.length - 1]?.timestamp || 0;
+function getRevolutInvestedUpTo(trades: DatedRevolutTrade[], cutoffMs: number, totalCost: number, undatedBaselineEur: number): number {
+  const buys = trades.filter(t => t.type === "BUY");
+  if (buys.length === 0) return totalCost;
+  const lastTradeTime = buys[buys.length - 1].timestamp;
   // Si la fecha de corte es posterior al último hito de compra del extracto, el capital invertido es el coste real actual
   if (cutoffMs >= lastTradeTime) {
     return totalCost;
   }
-  let invested = 0;
-  for (const t of trades) {
+  let invested = undatedBaselineEur;
+  for (const t of buys) {
     if (t.timestamp <= cutoffMs) {
       invested += t.totalEur;
     }
@@ -141,7 +107,9 @@ export async function getRevolutChartPoints(
   timeframe: Timeframe,
   totalValue: number,
   totalCost: number,
-  positions: T212Position[] = []
+  positions: T212Position[] = [],
+  trades: DatedRevolutTrade[] = [],
+  undatedBaselineEur = 0
 ): Promise<ChartPoint[]> {
   const points: ChartPoint[] = [];
   const now = new Date();
@@ -163,8 +131,7 @@ export async function getRevolutChartPoints(
     return points;
   }
 
-  const trades = getRevolutTrades();
-  const firstTradeTime = trades.length > 0 ? trades[0].timestamp : 0;
+  const firstTradeTime = undatedBaselineEur > 0 ? 0 : trades.find(t => t.type === "BUY")?.timestamp || 0;
 
   // Activo representativo de Revolut con alta liquidez (NVDA o primer holding)
   const primaryHolding = positions.find((p) => p.ticker === "NVDA") || positions[0];
@@ -201,6 +168,8 @@ export async function getRevolutChartPoints(
     if (candlesToUse.length > 0 && sampledCandles[sampledCandles.length - 1] !== candlesToUse[candlesToUse.length - 1]) {
       sampledCandles.push(candlesToUse[candlesToUse.length - 1]);
     }
+    const sessionDate = `${latestDate.getFullYear()}-${String(latestDate.getMonth() + 1).padStart(2, "0")}-${String(latestDate.getDate()).padStart(2, "0")}`;
+    const sessionBuys = trades.filter(t => t.type === "BUY" && t.date === sessionDate);
 
     for (let i = 0; i < sampledCandles.length; i++) {
       const candle = sampledCandles[i];
@@ -227,6 +196,29 @@ export async function getRevolutChartPoints(
         realProfitPct: profPct,
         totalValue: isLast ? totalValue : val,
         totalInvested: Number(totalCost.toFixed(2)),
+        ...(i === 0 && sessionBuys.length > 0 ? { tradeEvent: {
+          type: "BUY" as const,
+          label: `Compra ${Array.from(new Set(sessionBuys.map(t => t.ticker))).join(", ")}: +${formatEur(sessionBuys.reduce((sum, t) => sum + t.totalEur, 0))}`,
+        } } : {}),
+      });
+    }
+
+    // When the latest market session is earlier than today's purchase (e.g.
+    // weekend/holiday), add a real "today" point instead of dating the marker
+    // on the previous session.
+    const todayBuys = trades.filter(t => t.type === "BUY" && t.date === format(now, "yyyy-MM-dd"));
+    if ((points.length === 0 || sessionDate !== format(now, "yyyy-MM-dd")) && todayBuys.length > 0) {
+      const profit = Number((totalValue - totalCost).toFixed(2));
+      points.push({
+        timestamp: now.getTime(),
+        date: "Hoy",
+        fullDate: format(now, "EEEE, d 'de' MMMM", { locale: es }),
+        realProfit: profit,
+        realProfitPct: totalCost > 0 ? Number((profit / totalCost * 100).toFixed(2)) : 0,
+        totalValue: Number(totalValue.toFixed(2)),
+        totalInvested: Number(totalCost.toFixed(2)),
+        tradeEvent: { type: "BUY",
+          label: `Compra ${Array.from(new Set(todayBuys.map(t => t.ticker))).join(", ")}: +${formatEur(todayBuys.reduce((sum, t) => sum + t.totalEur, 0))}` },
       });
     }
 
@@ -237,9 +229,21 @@ export async function getRevolutChartPoints(
   if (timeframe === "W" || timeframe === "M") {
     const daysCount = timeframe === "W" ? 7 : 30;
     const tradingDays = getRollingTradingDays(daysCount);
+    // A manually recorded purchase can be dated on a non-trading day.
+    const firstDay = tradingDays[0]
+      ? new Date(tradingDays[0].getFullYear(), tradingDays[0].getMonth(), tradingDays[0].getDate()).getTime()
+      : 0;
+    const lastDay = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const visibleDates = new Map(tradingDays.map(day => [format(day, "yyyy-MM-dd"), day]));
+    for (const trade of trades) {
+      if (trade.timestamp >= firstDay && trade.timestamp <= lastDay && !visibleDates.has(trade.date)) {
+        visibleDates.set(trade.date, new Date(trade.timestamp));
+      }
+    }
+    const chartDays = Array.from(visibleDates.values()).sort((a, b) => a.getTime() - b.getTime());
 
-    for (let i = 0; i < tradingDays.length; i++) {
-      const ptDate = tradingDays[i];
+    for (let i = 0; i < chartDays.length; i++) {
+      const ptDate = chartDays[i];
       const isRealToday =
         ptDate.getDate() === now.getDate() &&
         ptDate.getMonth() === now.getMonth() &&
@@ -262,8 +266,8 @@ export async function getRevolutChartPoints(
         continue;
       }
 
-      const investedAtDay = getRevolutInvestedUpTo(trades, dayEndMs, totalCost);
-      const isLast = i === tradingDays.length - 1 || isRealToday;
+      const investedAtDay = getRevolutInvestedUpTo(trades, dayEndMs, totalCost, undatedBaselineEur);
+      const isLast = i === chartDays.length - 1 || isRealToday;
 
       let val = totalValue;
       let prof = totalValue - totalCost;
@@ -291,7 +295,7 @@ export async function getRevolutChartPoints(
       // Detectar operaciones en este día concreto
       let tradeEvent: { type: "BUY" | "SELL"; label: string } | undefined = undefined;
       const dayStartMs = new Date(ptDate.getFullYear(), ptDate.getMonth(), ptDate.getDate(), 0, 0, 0).getTime();
-      const buysToday = trades.filter((t) => t.timestamp >= dayStartMs && t.timestamp <= dayEndMs);
+      const buysToday = trades.filter((t) => t.type === "BUY" && t.timestamp >= dayStartMs && t.timestamp <= dayEndMs);
 
       if (buysToday.length > 0) {
         const tickers = Array.from(new Set(buysToday.map((t) => t.ticker))).join(", ");
@@ -355,14 +359,14 @@ export async function getRevolutChartPoints(
       }
 
       const isCurrentMonth = y === currentYear && m === currentMonth;
-      const investedAtMonth = isCurrentMonth ? totalCost : getRevolutInvestedUpTo(trades, monthEndMs, totalCost);
+      const investedAtMonth = isCurrentMonth ? totalCost : getRevolutInvestedUpTo(trades, monthEndMs, totalCost, undatedBaselineEur);
       const val = isCurrentMonth ? totalValue : investedAtMonth;
       const prof = isCurrentMonth ? Number((totalValue - totalCost).toFixed(2)) : 0;
       const profPct = investedAtMonth > 0 ? Number(((prof / investedAtMonth) * 100).toFixed(2)) : 0;
 
       let tradeEvent: { type: "BUY" | "SELL"; label: string } | undefined = undefined;
       const monthStartMs = new Date(y, m, 1, 0, 0, 0).getTime();
-      const monthBuys = trades.filter((t) => t.timestamp >= monthStartMs && t.timestamp <= monthEndMs);
+      const monthBuys = trades.filter((t) => t.type === "BUY" && t.timestamp >= monthStartMs && t.timestamp <= monthEndMs);
 
       if (monthBuys.length > 0) {
         const tickers = Array.from(new Set(monthBuys.map((t) => t.ticker))).join(", ");

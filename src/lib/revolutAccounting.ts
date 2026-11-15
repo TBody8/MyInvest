@@ -48,8 +48,34 @@ export interface PositionLedger {
   version: 2;
   baseline: { quantity: number; costEur: number };
   purchases: RecordedPurchase[];
+  importedTrades?: Array<{ date: string; executedAt: string; ticker: string; type: "BUY" | "SELL"; totalEur: number }>;
   legacyNotes?: string | null;
   corrections?: Array<{ date: string; quantity: number; averagePrice: number }>;
+}
+
+export interface DatedRevolutTrade {
+  timestamp: number;
+  date: string;
+  ticker: string;
+  totalEur: number;
+  type: "BUY" | "SELL";
+}
+
+export function datedTradesFromLedger(ticker: string, ledger: PositionLedger): DatedRevolutTrade[] {
+  const trades: DatedRevolutTrade[] = [];
+  const add = (date: string, totalEur: number, type: "BUY" | "SELL") => {
+    const [year, month, day] = date.split("-").map(Number);
+    const timestamp = new Date(year, month - 1, day).getTime();
+    if (Number.isFinite(timestamp) && Number.isFinite(totalEur) && totalEur > 0
+      && `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}` === date) {
+      trades.push({ timestamp, date, ticker, totalEur, type });
+    }
+  };
+  for (const purchase of ledger.purchases) add(purchase.date, purchase.costEur, "BUY");
+  for (const imported of ledger.importedTrades || []) {
+    if (imported.type === "BUY" || imported.type === "SELL") add(imported.date, imported.totalEur, imported.type);
+  }
+  return trades;
 }
 
 export function readLedger(position: { quantity: number; averagePrice: number; notes?: string | null }): PositionLedger {

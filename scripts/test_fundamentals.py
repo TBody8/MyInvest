@@ -4,9 +4,24 @@ from pathlib import Path
 import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src' / 'lib'))
 from fundamental_math import complete_sum, add_yoy, financial_point, ratio
+from valuation_measures import historical_valuation_measures
 
 
 class FinancialTests(unittest.TestCase):
+    def test_historical_valuation_measures_yahoo_orientation(self):
+        frame = pd.DataFrame({
+            'Current': {'Trailing P/E': 40, 'Forward P/E': 35},
+            '9/30/2026': {'Trailing P/E': 38, 'Forward P/E': 34, 'Price/Sales': 10},
+            '6/30/2026': {'Trailing P/E': 32, 'Enterprise Value/EBITDA': 21},
+        })
+        points = historical_valuation_measures(frame)
+        self.assertEqual([p['period'] for p in points], ['30/09/2026', '30/06/2026'])
+        self.assertEqual(points[0]['trailingPE'], 38)
+        self.assertEqual(points[0]['priceToSales'], 10)
+        self.assertEqual(points[1]['enterpriseToEbitda'], 21)
+        self.assertEqual(historical_valuation_measures(frame.T), points)
+        self.assertEqual(historical_valuation_measures(pd.DataFrame()), [])
+
     def test_missing_is_not_zero(self):
         self.assertIsNone(complete_sum([10, None, 20, 30]))
         self.assertEqual(complete_sum([10, 0, -10, 0]), 0)

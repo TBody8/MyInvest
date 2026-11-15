@@ -14,7 +14,7 @@ interface CachedFundamentals {
 
 const cache = new Map<string, CachedFundamentals>();
 const CACHE_TTL_MS = 2 * 60 * 60 * 1000; // 2 horas
-const CACHE_VERSION = "v3_validated_periods";
+const CACHE_VERSION = "v4_valuation_measures";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);

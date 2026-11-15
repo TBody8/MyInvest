@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 import pandas as pd
 import yfinance as yf
 from fundamental_math import number, value, financial_point, add_yoy
+from valuation_measures import historical_valuation_measures
 
 warnings.simplefilter('ignore')
 
@@ -80,15 +81,7 @@ def get_company_fundamentals(raw_ticker, period_type='annual'):
         valuation.update(dividendYield=dy * 100 if dy is not None else None,
                          recommendationKey=(info.get('recommendationKey') or 'N/D').upper(),
                          numberOfAnalystOpinions=info.get('numberOfAnalystOpinions'))
-        historical_multiples = []
-        vm = optional(lambda: t.get_valuation_measures())
-        if vm is not None:
-            for date, row in vm.iterrows():
-                item = {'period': str(date)}
-                for key, source in [('trailingPE', 'PeRatio'), ('forwardPE', 'ForwardPeRatio'), ('priceToSales', 'PsRatio'), ('enterpriseToEbitda', 'EnterprisesValueEBITDARatio'), ('enterpriseToRevenue', 'EnterprisesValueRevenueRatio')]:
-                    item[key] = number(row.get(source))
-                if any(item[k] is not None for k in item if k != 'period'):
-                    historical_multiples.append(item)
+        historical_multiples = historical_valuation_measures(optional(lambda: t.get_valuation_measures()))
         return {
             'profile': {'ticker': ticker, 'symbol': symbol, 'name': info.get('longName') or info.get('shortName'),
                 'sector': info.get('sector') or ('ETF / Fondo' if info.get('quoteType') == 'ETF' else 'N/D'),
