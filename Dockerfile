@@ -82,6 +82,7 @@ RUN chmod -R 777 /app/prisma
 # Copy Python calculation scripts executed via child_process at runtime
 COPY src/lib/get_company_fundamentals.py ./src/lib/get_company_fundamentals.py
 COPY src/lib/fundamental_math.py ./src/lib/fundamental_math.py
+COPY src/lib/valuation_measures.py ./src/lib/valuation_measures.py
 
 # Copy CSV statement file needed at runtime
 COPY trading-account-statement_2026-06-10_2026-11-03_en_129c4e.csv ./trading-account-statement_2026-06-10_2026-11-03_en_129c4e.csv
